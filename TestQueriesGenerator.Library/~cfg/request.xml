@@ -1,0 +1,5 @@
+﻿<?xml version="1.0"?>
+<ArrayOfScalableEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ScalableEntity RuntimeID="testGet" NamePrefix="DemoGet" FirstNumber="0" LastNumber="4"/>
+  <ScalableEntity RuntimeID="testSet" NamePrefix="DemoSet" FirstNumber="5" LastNumber="9"/>
+</ArrayOfScalableEntity>
