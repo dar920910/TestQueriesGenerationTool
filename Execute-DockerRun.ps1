@@ -1,0 +1,1 @@
+docker run --interactive --tty --rm test_queries_generator

@@ -1,0 +1,1 @@
+docker build --file Dockerfile --tag test_queries_generator .
