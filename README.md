@@ -2,7 +2,10 @@
 
 ## About the Project
 
-This project implements a tool to generate queries by a custom templates.
+This project implements a tool to generate queries by a custom configuration:
+
+- You can define a needed count of queries for different types of queries.
+- You can configure both GET and SET queries via configuration files.
 
 ## About the Repository Structure
 
