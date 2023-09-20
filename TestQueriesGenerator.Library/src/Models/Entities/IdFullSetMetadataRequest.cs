@@ -2,7 +2,7 @@ using TestQueriesGenerator.Library.Models.Abstractions;
 
 namespace TestQueriesGenerator.Library.Models.Entities
 {
-    public class IdFullSetMetadataRequest : NxFullMetadataRequest
+    public class IdFullSetMetadataRequest : FullMetadataRequest
     {
         List<IdSetFieldRequest> setMetadataRequests;
         public IdFullSetMetadataRequest(List<IdSetFieldRequest> idSetFieldRequests)

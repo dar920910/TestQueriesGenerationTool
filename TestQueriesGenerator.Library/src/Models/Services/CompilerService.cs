@@ -129,7 +129,7 @@ namespace TestQueriesGenerator.Library.Models.Services
         {
             WriteLine();
             OutSeparator();
-            WriteLine("\n NxRequestCompiler for Native Protocol Simulator\n");
+            WriteLine("\n Test Queries Generator\n");
             OutSeparator();
         }
 

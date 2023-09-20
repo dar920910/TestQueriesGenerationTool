@@ -2,7 +2,7 @@ using TestQueriesGenerator.Library.Models.Abstractions;
 
 namespace TestQueriesGenerator.Library.Models.Entities
 {
-    public class ScaleSetMetaRequest : NxScalableRequest
+    public class ScaleSetMetaRequest : ScalableRequest
     {
         List<IdFullSetMetadataRequest> setRequests;
         public ScaleSetMetaRequest(List<IdFullSetMetadataRequest> fullSetRequests)

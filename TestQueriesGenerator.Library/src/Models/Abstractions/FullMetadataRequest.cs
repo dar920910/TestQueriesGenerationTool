@@ -1,10 +1,7 @@
 namespace TestQueriesGenerator.Library.Models.Abstractions
 {
-    public abstract class NxRequest
+    public abstract class FullMetadataRequest
     {
-        protected string command;
-        protected string targetID;
-
         public abstract string Compile(bool isDebugMode);
     }
 }

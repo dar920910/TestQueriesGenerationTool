@@ -3,7 +3,7 @@ using TestQueriesGenerator.Library.Models.Services;
 
 namespace TestQueriesGenerator.Library.Models.Entities
 {
-    public class IdSetFieldRequest : NxMetadataFieldRequest
+    public class IdSetFieldRequest : MetadataFieldRequest
     {
         string value;
         public IdSetFieldRequest(string idName, string metadataField, string metadataValue)

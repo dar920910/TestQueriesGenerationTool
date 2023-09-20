@@ -1,6 +1,6 @@
 namespace TestQueriesGenerator.Library.Models.Abstractions
 {
-    public abstract class NxMetadataFieldRequest : NxRequest
+    public abstract class MetadataFieldRequest : Request
     {
         protected string metadataFieldName;
     }
