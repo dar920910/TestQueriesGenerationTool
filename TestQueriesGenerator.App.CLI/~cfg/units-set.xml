@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ArrayOfMediaSetUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <MediaSetUnit RuntimeID="testSet">
+<ArrayOfMetadataCreationQueryUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MetadataCreationQueryUnit RuntimeID="testSet">
     <Agency>agency</Agency>
     <Description>description</Description>
     <Department>department</Department>
@@ -10,5 +10,5 @@
     <UserField2>userfield2</UserField2>
     <UserField3>userfield3</UserField3>
     <UserField4>userfield4</UserField4>
-  </MediaSetUnit>
-</ArrayOfMediaSetUnit>
+  </MetadataCreationQueryUnit>
+</ArrayOfMetadataCreationQueryUnit>

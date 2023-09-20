@@ -53,20 +53,20 @@ namespace TestQueriesGenerator.Library.Services
 
         private static string CompileScaleGetRequest(List<ScalableEntity> scales, bool isDebugMode)
         {
-            List<MediaGetUnit> getUnits = DeserializationService.DeserializeMediaGetUnits();
-            Dictionary<MediaGetUnit, ScalableEntity> mediaGetScales = RequestService.CombineMediaGetScales(getUnits, scales);
-            List<MediaGetUnit> mediaGetUnits = RequestService.CreateGetUnitsList(mediaGetScales);
-            ScaleGetMetaRequest scaleGetRequest = RequestService.CreateScaleGetRequest(mediaGetUnits);
+            List<MetadataSelectionQueryUnit> queryUnits = DeserializationService.DeserializeMetadataSelectionQueryUnits();
+            Dictionary<MetadataSelectionQueryUnit, ScalableEntity> queryScales = RequestService.CombineMetadataSelectionQueryScales(queryUnits, scales);
+            List<MetadataSelectionQueryUnit> metadataGetUnits = RequestService.CreateGetUnitsList(queryScales);
+            ScaleGetMetaRequest scaleGetRequest = RequestService.CreateScaleGetRequest(metadataGetUnits);
 
             return scaleGetRequest.Compile(isDebugMode);
         }
 
         private static string CompileScaleSetRequest(List<ScalableEntity> scales, bool isDebugMode)
         {
-            List<MediaSetUnit> setUnits = DeserializationService.DeserializeMediaSetUnits();
-            Dictionary<MediaSetUnit, ScalableEntity> mediaSetScales = RequestService.CombineMediaSetScales(setUnits, scales);
-            List<MediaSetUnit> mediaSetUnits = RequestService.CreateSetUnitsList(mediaSetScales);
-            ScaleSetMetaRequest scaleSetRequest = RequestService.CreateScaleSetRequest(mediaSetUnits);
+            List<MetadataCreationQueryUnit> queryUnits = DeserializationService.DeserializeMetadataCreationQueryUnits();
+            Dictionary<MetadataCreationQueryUnit, ScalableEntity> queryScales = RequestService.CombineMetadataCreationQueryScales(queryUnits, scales);
+            List<MetadataCreationQueryUnit> metadataSetUnits = RequestService.CreateSetUnitsList(queryScales);
+            ScaleSetMetaRequest scaleSetRequest = RequestService.CreateScaleSetRequest(metadataSetUnits);
 
             return scaleSetRequest.Compile(isDebugMode);
         }

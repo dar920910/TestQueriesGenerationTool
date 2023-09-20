@@ -1,12 +1,12 @@
 namespace TestQueriesGenerator.Library.Domains
 {
-    public class RandomMediaName
+    public class RandomMetadata
     {
         public byte Length { get; }
         public byte Lowers { get; }
         public byte Uppers { get; }
 
-        public RandomMediaName(byte lowers, byte uppers)
+        public RandomMetadata(byte lowers, byte uppers)
         {
             Length = (byte)(lowers + uppers);
             Lowers = lowers;

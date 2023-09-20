@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ArrayOfMediaGetUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <MediaGetUnit RuntimeID="testGet"
+<ArrayOfMetadataSelectionQueryUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MetadataSelectionQueryUnit RuntimeID="testGet"
         Agency="true"
         Description="true"
         Department="true"
@@ -27,4 +27,4 @@
         AudioBits="false"
         AudioChannels="false"
   />
-</ArrayOfMediaGetUnit>
+</ArrayOfMetadataSelectionQueryUnit>

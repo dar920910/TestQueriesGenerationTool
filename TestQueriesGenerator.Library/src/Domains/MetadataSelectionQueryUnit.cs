@@ -2,19 +2,18 @@ using System.Xml.Serialization;
 
 namespace TestQueriesGenerator.Library.Domains
 {
-    public class MediaGetUnit
+    public class MetadataSelectionQueryUnit
     {
         [XmlAttribute ("RuntimeID")]
         public string RuntimeID { get; set; }
         public string Name { get; set; }
 
-        public MediaGetUnit() { }
-        public MediaGetUnit(string idName)
+        public MetadataSelectionQueryUnit() { }
+        public MetadataSelectionQueryUnit(string idName)
         {
             Name = idName;
         }
-
-        public MediaGetUnit(string idName, string rtID)
+        public MetadataSelectionQueryUnit(string idName, string rtID)
         {
             Name = idName;
             RuntimeID = rtID;
@@ -96,33 +95,33 @@ namespace TestQueriesGenerator.Library.Domains
         public bool AudioChannels { get; set; }
 
 
-        public void Mirror(MediaGetUnit mediaGet)
+        public void Mirror(MetadataSelectionQueryUnit unit)
         {
-            this.Agency = mediaGet.Agency;
-            this.Department = mediaGet.Department;
-            this.Description = mediaGet.Description;
-            this.Title = mediaGet.Title;
-            this.Type = mediaGet.Type;
-            this.UserField1 = mediaGet.UserField1;
-            this.UserField2 = mediaGet.UserField2;
-            this.UserField3 = mediaGet.UserField3;
-            this.UserField4 = mediaGet.UserField4;
-            this.RecordTime = mediaGet.RecordTime;
-            this.ModifiedTime = mediaGet.ModifiedTime;
-            this.KillDate = mediaGet.KillDate;
-            this.SOM = mediaGet.SOM;
-            this.DAR = mediaGet.DAR;
-            this.GOP = mediaGet.GOP;
-            this.FileSize = mediaGet.FileSize;
-            this.Resolution = mediaGet.Resolution;
-            this.VideoFormat = mediaGet.VideoFormat;
-            this.BitRate = mediaGet.BitRate;
-            this.Handle = mediaGet.Handle;
-            this.Link = mediaGet.Link;
-            this.MachineName = mediaGet.MachineName;
-            this.UserName = mediaGet.UserName;
-            this.AudioBits = mediaGet.AudioBits;
-            this.AudioChannels = mediaGet.AudioChannels;
+            Agency = unit.Agency;
+            Department = unit.Department;
+            Description = unit.Description;
+            Title = unit.Title;
+            Type = unit.Type;
+            UserField1 = unit.UserField1;
+            UserField2 = unit.UserField2;
+            UserField3 = unit.UserField3;
+            UserField4 = unit.UserField4;
+            RecordTime = unit.RecordTime;
+            ModifiedTime = unit.ModifiedTime;
+            KillDate = unit.KillDate;
+            SOM = unit.SOM;
+            DAR = unit.DAR;
+            GOP = unit.GOP;
+            FileSize = unit.FileSize;
+            Resolution = unit.Resolution;
+            VideoFormat = unit.VideoFormat;
+            BitRate = unit.BitRate;
+            Handle = unit.Handle;
+            Link = unit.Link;
+            MachineName = unit.MachineName;
+            UserName = unit.UserName;
+            AudioBits = unit.AudioBits;
+            AudioChannels = unit.AudioChannels;
         }
     }
 }

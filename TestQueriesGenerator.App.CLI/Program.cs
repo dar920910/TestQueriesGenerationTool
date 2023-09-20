@@ -29,25 +29,25 @@ void TestConfiguration()
 void TestDeserialization()
 {
     List<ScalableEntity> scales = DeserializeScalableEntities();
-    List<MediaGetUnit> getUnits = DeserializeMediaGetUnits();
-    List<MediaSetUnit> setUnits = DeserializeMediaSetUnits();
+    List<MetadataSelectionQueryUnit> getUnits = DeserializeMetadataSelectionQueryUnits();
+    List<MetadataCreationQueryUnit> setUnits = DeserializeMetadataCreationQueryUnits();
 
-    Dictionary<MediaGetUnit, ScalableEntity> mediaGetScales = CombineMediaGetScales(getUnits, scales);
-    Dictionary<MediaSetUnit, ScalableEntity> mediaSetScales = CombineMediaSetScales(setUnits, scales);
+    Dictionary<MetadataSelectionQueryUnit, ScalableEntity> metadataGetScales = CombineMetadataSelectionQueryScales(getUnits, scales);
+    Dictionary<MetadataCreationQueryUnit, ScalableEntity> metadataSetScales = CombineMetadataCreationQueryScales(setUnits, scales);
 
-    OutGetScales(mediaGetScales);
-    OutSetScales(mediaSetScales);
+    OutGetScales(metadataGetScales);
+    OutSetScales(metadataSetScales);
 }
 
 void TestRequests()
 {
     var scale = new ScalableEntity("test", "ScalableTest", 0, 1000);
 
-    List<MediaGetUnit> mediaGetUnits = CreateGetUnitsList(scale);
-    List<MediaSetUnit> mediaSetUnits = CreateSetUnitsList(scale);
+    List<MetadataSelectionQueryUnit> metadataGetUnits = CreateGetUnitsList(scale);
+    List<MetadataCreationQueryUnit> metadataSetUnits = CreateSetUnitsList(scale);
 
-    ScaleGetMetaRequest scaleGetRequest = CreateScaleGetRequest(mediaGetUnits);
-    ScaleSetMetaRequest scaleSetRequest = CreateScaleSetRequest(mediaSetUnits);
+    ScaleGetMetaRequest scaleGetRequest = CreateScaleGetRequest(metadataGetUnits);
+    ScaleSetMetaRequest scaleSetRequest = CreateScaleSetRequest(metadataSetUnits);
 
     string scaleGetRequestString = scaleGetRequest.Compile(true);
     string scaleSetRequestString = scaleSetRequest.Compile(true);

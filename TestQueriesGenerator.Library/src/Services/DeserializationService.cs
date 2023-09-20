@@ -22,34 +22,34 @@ namespace TestQueriesGenerator.Library.Services
             return scaleEntities;
         }
 
-        public static List<MediaGetUnit> DeserializeMediaGetUnits()
+        public static List<MetadataSelectionQueryUnit> DeserializeMetadataSelectionQueryUnits()
         {
-            var mediaGetUnits = new List<MediaGetUnit>();
+            var queryUnits = new List<MetadataSelectionQueryUnit>();
 
             string getPath = RequestGetTypeConfigPath;
-            var xsGetUnits = new XmlSerializer(typeof(List<MediaGetUnit>));
+            var xsGetUnits = new XmlSerializer(typeof(List<MetadataSelectionQueryUnit>));
 
             using (FileStream xmlLoad = File.Open(getPath, FileMode.Open))
             {
-                mediaGetUnits = (List<MediaGetUnit>)xsGetUnits.Deserialize(xmlLoad);
+                queryUnits = (List<MetadataSelectionQueryUnit>)xsGetUnits.Deserialize(xmlLoad);
             }
 
-            return mediaGetUnits;
+            return queryUnits;
         }
 
-        public static List<MediaSetUnit> DeserializeMediaSetUnits()
+        public static List<MetadataCreationQueryUnit> DeserializeMetadataCreationQueryUnits()
         {
-            var mediaSetUnits = new List<MediaSetUnit>();
+            var queryUnits = new List<MetadataCreationQueryUnit>();
 
             string setPath = RequestSetTypeConfigPath;
-            var xsSetUnits = new XmlSerializer(typeof(List<MediaSetUnit>));
+            var xsSetUnits = new XmlSerializer(typeof(List<MetadataCreationQueryUnit>));
 
             using (FileStream xmlLoad = File.Open(setPath, FileMode.Open))
             {
-                mediaSetUnits = (List<MediaSetUnit>)xsSetUnits.Deserialize(xmlLoad);
+                queryUnits = (List<MetadataCreationQueryUnit>)xsSetUnits.Deserialize(xmlLoad);
             }
 
-            return mediaSetUnits;
+            return queryUnits;
         }
     }
 }

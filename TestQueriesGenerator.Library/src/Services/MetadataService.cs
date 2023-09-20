@@ -10,7 +10,7 @@ namespace TestQueriesGenerator.Library.Services
             return prefix + "_" + GeneratorService.GetIdNumber(number);
         }
 
-        public static void AddAllMetadataFieldsToGetUnit(MediaGetUnit getUnit, ref List<IdGetFieldRequest> getRequests)
+        public static void AddAllMetadataFieldsToGetUnit(MetadataSelectionQueryUnit getUnit, ref List<IdGetFieldRequest> getRequests)
         {
             if (getUnit.Agency) getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Agency));
             if (getUnit.Department) getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Department));
@@ -39,7 +39,7 @@ namespace TestQueriesGenerator.Library.Services
             if (getUnit.AudioChannels) getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.AudioChannels));
         }
 
-        public static void AddAllMetadataFieldsToSetUnit(MediaSetUnit setUnit, ref List<IdSetFieldRequest> setRequests)
+        public static void AddAllMetadataFieldsToSetUnit(MetadataCreationQueryUnit setUnit, ref List<IdSetFieldRequest> setRequests)
         {
 
             if (setUnit.Agency != null)

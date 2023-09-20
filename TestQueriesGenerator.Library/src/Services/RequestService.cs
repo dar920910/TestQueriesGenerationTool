@@ -6,97 +6,97 @@ namespace TestQueriesGenerator.Library.Services
 {
     public static class RequestService
     {
-        private static bool IsEqualRuntimeIDForScaleGetRequest(MediaGetUnit mediaGetUnit, ScalableEntity scalable)
+        private static bool IsEqualRuntimeIDForScaleGetRequest(MetadataSelectionQueryUnit unit, ScalableEntity scalable)
         {
-            return mediaGetUnit.RuntimeID.Equals(scalable.RuntimeID);
+            return unit.RuntimeID.Equals(scalable.RuntimeID);
         }
 
-        private static bool IsEqualRuntimeIDForScaleSetRequest(MediaSetUnit mediaSetUnit, ScalableEntity scalable)
+        private static bool IsEqualRuntimeIDForScaleSetRequest(MetadataCreationQueryUnit unit, ScalableEntity scalable)
         {
-            return mediaSetUnit.RuntimeID.Equals(scalable.RuntimeID);
+            return unit.RuntimeID.Equals(scalable.RuntimeID);
         }
 
-        public static Dictionary<MediaGetUnit, ScalableEntity> CombineMediaGetScales(List<MediaGetUnit> getUnits, List<ScalableEntity> scales)
+        public static Dictionary<MetadataSelectionQueryUnit, ScalableEntity> CombineMetadataSelectionQueryScales(List<MetadataSelectionQueryUnit> queryUnits, List<ScalableEntity> scales)
         {
-            var mediaGetScales = new Dictionary<MediaGetUnit, ScalableEntity>();
+            var queryScales = new Dictionary<MetadataSelectionQueryUnit, ScalableEntity>();
 
-            foreach (var getUnit in getUnits)
+            foreach (var getUnit in queryUnits)
             {
                 foreach (var scale in scales)
                 {
                     if (IsEqualRuntimeIDForScaleGetRequest(getUnit, scale))
                     {
-                        mediaGetScales.Add(getUnit, scale);
+                        queryScales.Add(getUnit, scale);
                     }
                 }
             }
 
-            return mediaGetScales;
+            return queryScales;
         }
 
-        public static Dictionary<MediaSetUnit, ScalableEntity> CombineMediaSetScales(List<MediaSetUnit> setUnits, List<ScalableEntity> scales)
+        public static Dictionary<MetadataCreationQueryUnit, ScalableEntity> CombineMetadataCreationQueryScales(List<MetadataCreationQueryUnit> queryUnits, List<ScalableEntity> scales)
         {
-            var mediaSetScales = new Dictionary<MediaSetUnit, ScalableEntity>();
+            var queryScales = new Dictionary<MetadataCreationQueryUnit, ScalableEntity>();
 
-            foreach (var setUnit in setUnits)
+            foreach (var setUnit in queryUnits)
             {
                 foreach (var scale in scales)
                 {
                     if (IsEqualRuntimeIDForScaleSetRequest(setUnit, scale))
                     {
-                        mediaSetScales.Add(setUnit, scale);
+                        queryScales.Add(setUnit, scale);
                     }
                 }
             }
 
-            return mediaSetScales;
+            return queryScales;
         }
 
-        public static void OutGetScales(Dictionary<MediaGetUnit, ScalableEntity> getScales)
+        public static void OutGetScales(Dictionary<MetadataSelectionQueryUnit, ScalableEntity> getScales)
         {
             foreach (var getScale in getScales)
             {
                 WriteLine();
                 WriteLine("Key: {0} | Value: {1}", getScale.Key, getScale.Value);
-                WriteLine("RuntimeID (Key | MediaGetUnit): {0}", getScale.Key.RuntimeID);
+                WriteLine("RuntimeID (Key | MetadataSelectionQueryUnit): {0}", getScale.Key.RuntimeID);
                 WriteLine("RuntimeID (Value | ScalableEntity): {0}", getScale.Value.RuntimeID);
                 WriteLine();
             }
         }
 
-        public static void OutSetScales(Dictionary<MediaSetUnit, ScalableEntity> setScales)
+        public static void OutSetScales(Dictionary<MetadataCreationQueryUnit, ScalableEntity> setScales)
         {
             foreach (var setScale in setScales)
             {
                 WriteLine();
                 WriteLine("Key: {0} | Value: {1}", setScale.Key, setScale.Value);
-                WriteLine("RuntimeID (Key | MediaSetUnit): {0}", setScale.Key.RuntimeID);
+                WriteLine("RuntimeID (Key | MetadataCreationQueryUnit): {0}", setScale.Key.RuntimeID);
                 WriteLine("RuntimeID (Value | ScalableEntity): {0}", setScale.Value.RuntimeID);
                 WriteLine();
             }
         }
 
-        public static List<MediaGetUnit> CreateGetUnitsList(ScalableEntity scale)
+        public static List<MetadataSelectionQueryUnit> CreateGetUnitsList(ScalableEntity scale)
         {
-            var mediaGetUnits = new List<MediaGetUnit>();
+            var queryUnits = new List<MetadataSelectionQueryUnit>();
 
             for (uint idCount = scale.FirstScalePostfixNumber; idCount <= scale.LastScalePostfixNumber; idCount++)
             {
                 string idNameForGetUnit = MetadataService.CreateIdName(scale.IdNamePrefix, idCount);
 
-                var mediaGetUnit = new MediaGetUnit(idNameForGetUnit);
+                var unit = new MetadataSelectionQueryUnit(idNameForGetUnit);
 
-                // TODO: Fill all fields' values for mediaGetUnit.
+                // Fill all fields' values for 'unit'.
 
-                mediaGetUnits.Add(mediaGetUnit);
+                queryUnits.Add(unit);
             }
 
-            return mediaGetUnits;
+            return queryUnits;
         }
 
-        public static List<MediaGetUnit> CreateGetUnitsList(Dictionary<MediaGetUnit, ScalableEntity> getScales)
+        public static List<MetadataSelectionQueryUnit> CreateGetUnitsList(Dictionary<MetadataSelectionQueryUnit, ScalableEntity> getScales)
         {
-            var mediaGetUnits = new List<MediaGetUnit>();
+            var queryUnits = new List<MetadataSelectionQueryUnit>();
 
             foreach (var getScale in getScales)
             {
@@ -104,37 +104,37 @@ namespace TestQueriesGenerator.Library.Services
                 {
                     string idName = MetadataService.CreateIdName(getScale.Value.IdNamePrefix, idCount);
 
-                    var mediaGetUnit = new MediaGetUnit(idName);
-                    mediaGetUnit.Mirror(getScale.Key);
+                    var unit = new MetadataSelectionQueryUnit(idName);
+                    unit.Mirror(getScale.Key);
 
-                    mediaGetUnits.Add(mediaGetUnit);
+                    queryUnits.Add(unit);
                 }
             }
 
-            return mediaGetUnits;
+            return queryUnits;
         }
 
-        public static List<MediaSetUnit> CreateSetUnitsList(ScalableEntity scale)
+        public static List<MetadataCreationQueryUnit> CreateSetUnitsList(ScalableEntity scale)
         {
-           var mediaSetUnits = new List<MediaSetUnit>();
+           var queryUnits = new List<MetadataCreationQueryUnit>();
 
             for (uint idCount = scale.FirstScalePostfixNumber; idCount <= scale.LastScalePostfixNumber; idCount++)
             {
                 string idNameForSetUnit = MetadataService.CreateIdName(scale.IdNamePrefix, idCount);
 
-                var mediaSetUnit = new MediaSetUnit(idNameForSetUnit);
+                var unit = new MetadataCreationQueryUnit(idNameForSetUnit);
 
-                // TODO: Fill all fields' values for mediaSetUnit.
+                // Fill all fields' values for 'unit'.
 
-                mediaSetUnits.Add(mediaSetUnit);
+                queryUnits.Add(unit);
             }
 
-            return mediaSetUnits;
+            return queryUnits;
         }
 
-        public static List<MediaSetUnit> CreateSetUnitsList(Dictionary<MediaSetUnit, ScalableEntity> setScales)
+        public static List<MetadataCreationQueryUnit> CreateSetUnitsList(Dictionary<MetadataCreationQueryUnit, ScalableEntity> setScales)
         {
-            var mediaSetUnits = new List<MediaSetUnit>();
+            var queryUnits = new List<MetadataCreationQueryUnit>();
 
             foreach (var setScale in setScales)
             {
@@ -142,25 +142,25 @@ namespace TestQueriesGenerator.Library.Services
                 {
                     string idName = MetadataService.CreateIdName(setScale.Value.IdNamePrefix, idCount);
 
-                    var mediaSetUnit = new MediaSetUnit(idName);
-                    mediaSetUnit.Mirror(setScale.Key);
+                    var unit = new MetadataCreationQueryUnit(idName);
+                    unit.Mirror(setScale.Key);
 
-                    mediaSetUnits.Add(mediaSetUnit);
+                    queryUnits.Add(unit);
                 }
             }
 
-            return mediaSetUnits;
+            return queryUnits;
         }
 
-        public static ScaleGetMetaRequest CreateScaleGetRequest(List<MediaGetUnit> mediaGetUnits)
+        public static ScaleGetMetaRequest CreateScaleGetRequest(List<MetadataSelectionQueryUnit> queryUnits)
         {
             var fullGetRequests = new List<IdFullGetMetadataRequest>();
 
-            foreach (var mediaGetUnit in mediaGetUnits)
+            foreach (var unit in queryUnits)
             {
                 var getRequests = new List<IdGetFieldRequest>();
 
-                MetadataService.AddAllMetadataFieldsToGetUnit(mediaGetUnit, ref getRequests);
+                MetadataService.AddAllMetadataFieldsToGetUnit(unit, ref getRequests);
 
                 var fullGetRequest = new IdFullGetMetadataRequest(getRequests);
 
@@ -170,15 +170,15 @@ namespace TestQueriesGenerator.Library.Services
             return new ScaleGetMetaRequest(fullGetRequests);
         }
 
-        public static ScaleSetMetaRequest CreateScaleSetRequest(List<MediaSetUnit> mediaSetUnits)
+        public static ScaleSetMetaRequest CreateScaleSetRequest(List<MetadataCreationQueryUnit> queryUnits)
         {
             var fullSetRequests = new List<IdFullSetMetadataRequest>();
 
-            foreach (var mediaSetUnit in mediaSetUnits)
+            foreach (var unit in queryUnits)
             {
                 var setRequests = new List<IdSetFieldRequest>();
 
-                MetadataService.AddAllMetadataFieldsToSetUnit(mediaSetUnit, ref setRequests);
+                MetadataService.AddAllMetadataFieldsToSetUnit(unit, ref setRequests);
 
                 var fullSetRequest = new IdFullSetMetadataRequest(setRequests);
 
@@ -198,7 +198,7 @@ namespace TestQueriesGenerator.Library.Services
             }
         }
 
-        public static void OutGetRequests(List<MediaGetUnit> getUnits)
+        public static void OutGetRequests(List<MetadataSelectionQueryUnit> getUnits)
         {
             foreach (var getUnit in getUnits)
             {
@@ -213,7 +213,7 @@ namespace TestQueriesGenerator.Library.Services
             }
         }
 
-        public static void OutSetRequests(List<MediaSetUnit> setUnits)
+        public static void OutSetRequests(List<MetadataCreationQueryUnit> setUnits)
         {
             foreach (var setUnit in setUnits)
             {
