@@ -1,12 +1,12 @@
 using System.Diagnostics;
-using TestQueriesGenerator.Library.Models.Domains;
-using TestQueriesGenerator.Library.Models.Entities;
+using TestQueriesGenerator.Library.Domains;
+using TestQueriesGenerator.Library.Entities;
 
 using static System.Console;
-using static TestQueriesGenerator.Library.Models.Services.DateTimeService;
-using static TestQueriesGenerator.Library.Models.Services.GeneratorService;
+using static TestQueriesGenerator.Library.Services.DateTimeService;
+using static TestQueriesGenerator.Library.Services.GeneratorService;
 
-namespace TestQueriesGenerator.Library.Models.Services
+namespace TestQueriesGenerator.Library.Services
 {
     public static class CompilerService
     {

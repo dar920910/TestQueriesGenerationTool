@@ -1,8 +1,8 @@
-using TestQueriesGenerator.Library.Models.Domains;
-using TestQueriesGenerator.Library.Models.Entities;
+using TestQueriesGenerator.Library.Domains;
+using TestQueriesGenerator.Library.Entities;
 using static System.Console;
 
-namespace TestQueriesGenerator.Library.Models.Services
+namespace TestQueriesGenerator.Library.Services
 {
     public static class RequestService
     {

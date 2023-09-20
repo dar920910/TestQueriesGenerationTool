@@ -1,4 +1,4 @@
-namespace TestQueriesGenerator.Library.Models.Services
+namespace TestQueriesGenerator.Library.Services
 {
     public static class CompiledOutputService
     {

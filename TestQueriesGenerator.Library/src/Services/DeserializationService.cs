@@ -1,9 +1,9 @@
 using System.Xml.Serialization;
-using TestQueriesGenerator.Library.Models.Domains;
+using TestQueriesGenerator.Library.Domains;
 
-using static TestQueriesGenerator.Library.Models.Services.ConfigService;
+using static TestQueriesGenerator.Library.Services.ConfigService;
 
-namespace TestQueriesGenerator.Library.Models.Services
+namespace TestQueriesGenerator.Library.Services
 {
     public static class DeserializationService
     {

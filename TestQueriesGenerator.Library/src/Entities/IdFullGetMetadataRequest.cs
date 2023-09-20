@@ -1,6 +1,6 @@
-using TestQueriesGenerator.Library.Models.Domains;
+using TestQueriesGenerator.Library.Domains;
 
-namespace TestQueriesGenerator.Library.Models.Entities
+namespace TestQueriesGenerator.Library.Entities
 {
     public class IdFullGetMetadataRequest : ICompilableRequest
     {

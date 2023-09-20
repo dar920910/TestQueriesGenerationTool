@@ -1,12 +1,12 @@
 ﻿#define TESTING
 #undef TESTING
 
-using TestQueriesGenerator.Library.Models.Domains;
-using TestQueriesGenerator.Library.Models.Entities;
-using static TestQueriesGenerator.Library.Models.Services.CompiledOutputService;
-using static TestQueriesGenerator.Library.Models.Services.ConfigService;
-using static TestQueriesGenerator.Library.Models.Services.DeserializationService;
-using static TestQueriesGenerator.Library.Models.Services.RequestService;
+using TestQueriesGenerator.Library.Domains;
+using TestQueriesGenerator.Library.Entities;
+using static TestQueriesGenerator.Library.Services.CompiledOutputService;
+using static TestQueriesGenerator.Library.Services.ConfigService;
+using static TestQueriesGenerator.Library.Services.DeserializationService;
+using static TestQueriesGenerator.Library.Services.RequestService;
 using static System.Console;
 
 
@@ -15,7 +15,7 @@ TestConfiguration();
 TestDeserialization();
 TestRequests();
 #else
-TestQueriesGenerator.Library.Models.Services.CompilerService.Run();
+TestQueriesGenerator.Library.Services.CompilerService.Run();
 #endif
 
 

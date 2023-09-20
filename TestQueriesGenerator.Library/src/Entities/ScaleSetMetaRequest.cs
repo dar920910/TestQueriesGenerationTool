@@ -1,13 +1,13 @@
-using TestQueriesGenerator.Library.Models.Domains;
+using TestQueriesGenerator.Library.Domains;
 
-namespace TestQueriesGenerator.Library.Models.Entities
+namespace TestQueriesGenerator.Library.Entities
 {
-    public class ScaleGetMetaRequest : ICompilableRequest
+    public class ScaleSetMetaRequest : ICompilableRequest
     {
-        List<IdFullGetMetadataRequest> getRequests;
-        public ScaleGetMetaRequest(List<IdFullGetMetadataRequest> fullGetRequests)
+        List<IdFullSetMetadataRequest> setRequests;
+        public ScaleSetMetaRequest(List<IdFullSetMetadataRequest> fullSetRequests)
         {
-            getRequests = fullGetRequests;
+            setRequests = fullSetRequests;
         }
 
         public string Compile(bool isDebugMode)
@@ -16,14 +16,14 @@ namespace TestQueriesGenerator.Library.Models.Entities
 
             if (isDebugMode)
             {
-                foreach (var request in getRequests)
+                foreach (var request in setRequests)
                 {
                     scaleRequest += request.Compile(true);
                 }
             }
             else
             {
-                foreach (var request in getRequests)
+                foreach (var request in setRequests)
                 {
                     scaleRequest += request.Compile(false);
                 }

@@ -1,7 +1,7 @@
-using TestQueriesGenerator.Library.Models.Domains;
-using TestQueriesGenerator.Library.Models.Services;
+using TestQueriesGenerator.Library.Domains;
+using TestQueriesGenerator.Library.Services;
 
-namespace TestQueriesGenerator.Library.Models.Entities
+namespace TestQueriesGenerator.Library.Entities
 {
     public class IdGetFieldRequest : AbstractMetadataFieldRequest, ICompilableRequest
     {

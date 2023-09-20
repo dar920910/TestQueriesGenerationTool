@@ -1,4 +1,4 @@
-namespace TestQueriesGenerator.Library.Models.Domains;
+namespace TestQueriesGenerator.Library.Domains;
 
 public abstract class AbstractMetadataFieldRequest
 {

@@ -1,4 +1,4 @@
-using TestQueriesGenerator.Library.Models.Services;
+using TestQueriesGenerator.Library.Services;
 
 namespace TestQueriesGenerator.Testing;
 

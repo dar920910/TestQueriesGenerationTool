@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace TestQueriesGenerator.Library.Models.Domains
+namespace TestQueriesGenerator.Library.Domains
 {
     public class MediaGetUnit
     {
