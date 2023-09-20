@@ -1,9 +1,9 @@
-using TestQueriesGenerator.Library.Models.Abstractions;
+using TestQueriesGenerator.Library.Models.Domains;
 using TestQueriesGenerator.Library.Models.Services;
 
 namespace TestQueriesGenerator.Library.Models.Entities
 {
-    public class IdGetFieldRequest : MetadataFieldRequest
+    public class IdGetFieldRequest : AbstractMetadataFieldRequest, ICompilableRequest
     {
         public IdGetFieldRequest(string idName, string metadataField)
         {
@@ -14,7 +14,7 @@ namespace TestQueriesGenerator.Library.Models.Entities
             CompilerService.Assign();
         }
 
-        public override string Compile(bool isDebugMode)
+        public string Compile(bool isDebugMode)
         {
             string compiledRequest = command + " " + metadataFieldName + " " + targetID;
 

@@ -1,8 +1,8 @@
-using TestQueriesGenerator.Library.Models.Abstractions;
+using TestQueriesGenerator.Library.Models.Domains;
 
 namespace TestQueriesGenerator.Library.Models.Entities
 {
-    public class ScaleSetMetaRequest : ScalableRequest
+    public class ScaleSetMetaRequest : ICompilableRequest
     {
         List<IdFullSetMetadataRequest> setRequests;
         public ScaleSetMetaRequest(List<IdFullSetMetadataRequest> fullSetRequests)
@@ -10,7 +10,7 @@ namespace TestQueriesGenerator.Library.Models.Entities
             setRequests = fullSetRequests;
         }
 
-        public override string Compile(bool isDebugMode)
+        public string Compile(bool isDebugMode)
         {
             string scaleRequest = string.Empty;
 

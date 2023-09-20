@@ -1,8 +1,8 @@
-using TestQueriesGenerator.Library.Models.Abstractions;
+using TestQueriesGenerator.Library.Models.Domains;
 
 namespace TestQueriesGenerator.Library.Models.Entities
 {
-    public class IdFullGetMetadataRequest : FullMetadataRequest
+    public class IdFullGetMetadataRequest : ICompilableRequest
     {
         List<IdGetFieldRequest> getMetadataRequests;
         public IdFullGetMetadataRequest(List<IdGetFieldRequest> idGetFieldRequests)
@@ -10,7 +10,7 @@ namespace TestQueriesGenerator.Library.Models.Entities
             getMetadataRequests = idGetFieldRequests;
         }
 
-        public override string Compile(bool isDebugMode)
+        public string Compile(bool isDebugMode)
         {
             string targetRequest = string.Empty;
 
