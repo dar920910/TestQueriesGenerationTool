@@ -1,14 +1,19 @@
-﻿#define TESTING
+﻿//-----------------------------------------------------------------------
+// <copyright file="Program.cs" company="Demo Projects Workshop">
+//     Copyright (c) Demo Projects Workshop. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+#define TESTING
 #undef TESTING
 
 using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Entities;
+using TestQueriesGenerator.Library.Services;
+using static System.Console;
 using static TestQueriesGenerator.Library.Services.CompiledOutputService;
-using static TestQueriesGenerator.Library.Services.ConfigService;
 using static TestQueriesGenerator.Library.Services.DeserializationService;
 using static TestQueriesGenerator.Library.Services.RequestService;
-using static System.Console;
-
 
 #if TESTING
 TestConfiguration();
@@ -18,12 +23,11 @@ TestRequests();
 TestQueriesGenerator.Library.Services.CompilerService.Run();
 #endif
 
-
 void TestConfiguration()
 {
-    WriteLine("{0}: {1}", nameof(ScaleRequestConfigPath), ScaleRequestConfigPath);
-    WriteLine("{0}: {1}", nameof(RequestGetTypeConfigPath), RequestGetTypeConfigPath);
-    WriteLine("{0}: {1}", nameof(RequestSetTypeConfigPath), RequestSetTypeConfigPath);
+    WriteLine("{0}: {1}", nameof(CompilerService.ScaleRequestConfigPath), CompilerService.ScaleRequestConfigPath);
+    WriteLine("{0}: {1}", nameof(CompilerService.RequestGetTypeConfigPath), CompilerService.RequestGetTypeConfigPath);
+    WriteLine("{0}: {1}", nameof(CompilerService.RequestSetTypeConfigPath), CompilerService.RequestSetTypeConfigPath);
 }
 
 void TestDeserialization()

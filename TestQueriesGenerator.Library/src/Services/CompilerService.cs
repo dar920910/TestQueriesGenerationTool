@@ -17,6 +17,20 @@ using static System.Console;
 /// </summary>
 public static class CompilerService
 {
+    private const string ScaleRequestCfgFileName = "request.xml";
+    private const string RequestGetTypeCfgFileName = "units-get.xml";
+    private const string RequestSetTypeCfgFileName = "units-set.xml";
+
+    private static readonly string ConfigHomeDirectory;
+
+    public static string ScaleRequestConfigPath { get; }
+
+    public static string RequestGetTypeConfigPath { get; }
+
+    public static string RequestSetTypeConfigPath { get; }
+
+    public static bool IsReady { get; }
+
     private static string datetimeCompilationStart;
     private static string datetimeCompilationFinish;
     private static uint actualRequestsCount;
@@ -24,15 +38,73 @@ public static class CompilerService
 
     static CompilerService()
     {
+        ConfigHomeDirectory = Directory.GetCurrentDirectory() + @"\~cfg\";
+        if (!Directory.Exists(ConfigHomeDirectory))
+        {
+            Directory.CreateDirectory(ConfigHomeDirectory);
+        }
+
+        string scaleRequestConfigPath = Path.Combine(ConfigHomeDirectory, ScaleRequestCfgFileName);
+        string requestGetTypeConfigPath = Path.Combine(ConfigHomeDirectory, RequestGetTypeCfgFileName);
+        string requestSetTypeConfigPath = Path.Combine(ConfigHomeDirectory, RequestSetTypeCfgFileName);
+
+        bool isScaleCfgReady = false;
+        bool isRequestGetCfgReady = false;
+        bool isRequestSetCfgReady = false;
+
+        if (HasScaleRequestConfig(scaleRequestConfigPath))
+        {
+            ScaleRequestConfigPath = scaleRequestConfigPath;
+            isScaleCfgReady = true;
+        }
+
+        if (HasScaleRequestConfig(requestGetTypeConfigPath))
+        {
+            RequestGetTypeConfigPath = requestGetTypeConfigPath;
+            isRequestGetCfgReady = true;
+        }
+
+        if (HasScaleRequestConfig(requestSetTypeConfigPath))
+        {
+            RequestSetTypeConfigPath = requestSetTypeConfigPath;
+            isRequestSetCfgReady = true;
+        }
+
+        IsReady = isScaleCfgReady && isRequestGetCfgReady && isRequestSetCfgReady;
+
         actualRequestsCount = 0;
         expectedRequestsCount = 0;
+    }
+
+    private static bool HasScaleRequestConfig(string requestConfigPath)
+    {
+        if (File.Exists(requestConfigPath))
+        {
+            OutConfigStatusIsSuccess(requestConfigPath);
+            return true;
+        }
+        else
+        {
+            OutConfigStatusIsFailed(requestConfigPath);
+            return false;
+        }
+    }
+
+    private static void OutConfigStatusIsSuccess(string configPath)
+    {
+        WriteLine(" [SUCCESS]: \'{0}\' config file was successfully found.", configPath);
+    }
+
+    private static void OutConfigStatusIsFailed(string configPath)
+    {
+        WriteLine(" [FAILED]: \'{0}\' config file was not detected.", configPath);
     }
 
     public static void Run()
     {
         OutBeforeCompilation();
 
-        if (ConfigService.IsReady)
+        if (IsReady)
         {
             var compilationStopwatch = new Stopwatch();
 

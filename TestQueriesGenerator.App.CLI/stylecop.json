@@ -1,4 +1,12 @@
 {
     "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
-    "settings": {}
+    "settings": {
+        "documentationRules": {
+            "companyName": "Demo Projects Workshop",
+            "copyrightText": "Copyright (c) {companyName}. All rights reserved."
+        },
+        "orderingRules": {
+            "usingDirectivesPlacement": "outsideNamespace"
+        }
+    }
 }

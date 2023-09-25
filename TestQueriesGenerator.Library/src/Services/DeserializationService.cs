@@ -1,8 +1,6 @@
 using System.Xml.Serialization;
 using TestQueriesGenerator.Library.Domains;
 
-using static TestQueriesGenerator.Library.Services.ConfigService;
-
 namespace TestQueriesGenerator.Library.Services
 {
     public static class DeserializationService
@@ -12,7 +10,7 @@ namespace TestQueriesGenerator.Library.Services
             var scaleEntities = new List<ScalableEntity>();
 
             var xsScales = new XmlSerializer(typeof(List<ScalableEntity>));
-            string path = ScaleRequestConfigPath;
+            string path = CompilerService.ScaleRequestConfigPath;
 
             using (FileStream xmlLoad = File.Open(path, FileMode.Open))
             {
@@ -26,7 +24,7 @@ namespace TestQueriesGenerator.Library.Services
         {
             var queryUnits = new List<MetadataSelectionQueryUnit>();
 
-            string getPath = RequestGetTypeConfigPath;
+            string getPath = CompilerService.RequestGetTypeConfigPath;
             var xsGetUnits = new XmlSerializer(typeof(List<MetadataSelectionQueryUnit>));
 
             using (FileStream xmlLoad = File.Open(getPath, FileMode.Open))
@@ -41,7 +39,7 @@ namespace TestQueriesGenerator.Library.Services
         {
             var queryUnits = new List<MetadataCreationQueryUnit>();
 
-            string setPath = RequestSetTypeConfigPath;
+            string setPath = CompilerService.RequestSetTypeConfigPath;
             var xsSetUnits = new XmlSerializer(typeof(List<MetadataCreationQueryUnit>));
 
             using (FileStream xmlLoad = File.Open(setPath, FileMode.Open))
