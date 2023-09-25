@@ -19,31 +19,31 @@ namespace TestQueriesGenerator.Library.Domains
             RuntimeID = rtID;
         }
 
-        [XmlElement (MetaAttribute.Agency)]
+        [XmlElement (Metadata.Agency)]
         public string Agency { get; set; }
 
-        [XmlElement (MetaAttribute.Description)]
+        [XmlElement (Metadata.Description)]
         public string Description { get; set; }
 
-        [XmlElement (MetaAttribute.Department)]
+        [XmlElement (Metadata.Department)]
         public string Department { get; set; }
 
-        [XmlElement (MetaAttribute.Title)]
+        [XmlElement (Metadata.Title)]
         public string Title { get; set; }
 
-        [XmlElement (MetaAttribute.Type)]
+        [XmlElement (Metadata.Type)]
         public string Type { get; set; }
 
-        [XmlElement (MetaAttribute.UserField1)]
+        [XmlElement (Metadata.UserField1)]
         public string UserField1 { get; set; }
 
-        [XmlElement (MetaAttribute.UserField2)]
+        [XmlElement (Metadata.UserField2)]
         public string UserField2 { get; set; }
 
-        [XmlElement (MetaAttribute.UserField3)]
+        [XmlElement (Metadata.UserField3)]
         public string UserField3 { get; set; }
 
-        [XmlElement (MetaAttribute.UserField4)]
+        [XmlElement (Metadata.UserField4)]
         public string UserField4 { get; set; }
 
         public void Mirror(MetadataCreationQueryUnit unit)

@@ -318,127 +318,127 @@ public static class CompilerService
     {
         if (getUnit.Agency)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Agency));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.Agency));
         }
 
         if (getUnit.Department)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Department));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.Department));
         }
 
         if (getUnit.Description)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Description));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.Description));
         }
 
         if (getUnit.Title)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Title));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.Title));
         }
 
         if (getUnit.Type)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Type));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.Type));
         }
 
         if (getUnit.UserField1)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.UserField1));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.UserField1));
         }
 
         if (getUnit.UserField2)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.UserField2));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.UserField2));
         }
 
         if (getUnit.UserField3)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.UserField3));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.UserField3));
         }
 
         if (getUnit.UserField4)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.UserField4));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.UserField4));
         }
 
         if (getUnit.RecordTime)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.RecordTime));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.RecordTime));
         }
 
         if (getUnit.ModifiedTime)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.ModifiedTime));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.ModifiedTime));
         }
 
         if (getUnit.KillDate)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.KillDate));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.KillDate));
         }
 
         if (getUnit.SOM)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.SOM));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.SOM));
         }
 
         if (getUnit.DAR)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.DAR));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.DAR));
         }
 
         if (getUnit.GOP)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.GOP));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.GOP));
         }
 
         if (getUnit.FileSize)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.FileSize));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.FileSize));
         }
 
         if (getUnit.Resolution)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Resolution));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.Resolution));
         }
 
         if (getUnit.VideoFormat)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.VideoFormat));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.VideoFormat));
         }
 
         if (getUnit.BitRate)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.BitRate));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.BitRate));
         }
 
         if (getUnit.Handle)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Handle));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.Handle));
         }
 
         if (getUnit.Link)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.Link));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.Link));
         }
 
         if (getUnit.MachineName)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.MachineName));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.MachineName));
         }
 
         if (getUnit.UserName)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.UserName));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.UserName));
         }
 
         if (getUnit.AudioBits)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.AudioBits));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.AudioBits));
         }
 
         if (getUnit.AudioChannels)
         {
-            getRequests.Add(new IdGetFieldRequest(getUnit.Name, MetaAttribute.AudioChannels));
+            getRequests.Add(new IdGetFieldRequest(getUnit.Name, Metadata.AudioChannels));
         }
     }
 
@@ -446,47 +446,47 @@ public static class CompilerService
     {
         if (setUnit.Agency != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.Agency, setUnit.Agency));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.Agency, setUnit.Agency));
         }
 
         if (setUnit.Department != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.Department, setUnit.Department));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.Department, setUnit.Department));
         }
 
         if (setUnit.Description != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.Description, setUnit.Description));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.Description, setUnit.Description));
         }
 
         if (setUnit.Title != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.Title, setUnit.Title));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.Title, setUnit.Title));
         }
 
         if (setUnit.Type != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.Type, setUnit.Type));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.Type, setUnit.Type));
         }
 
         if (setUnit.UserField1 != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.UserField1, setUnit.UserField1));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.UserField1, setUnit.UserField1));
         }
 
         if (setUnit.UserField2 != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.UserField2, setUnit.UserField2));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.UserField2, setUnit.UserField2));
         }
 
         if (setUnit.UserField3 != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.UserField3, setUnit.UserField3));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.UserField3, setUnit.UserField3));
         }
 
         if (setUnit.UserField4 != null)
         {
-            setRequests.Add(new IdSetFieldRequest(setUnit.Name, MetaAttribute.UserField4, setUnit.UserField4));
+            setRequests.Add(new IdSetFieldRequest(setUnit.Name, Metadata.UserField4, setUnit.UserField4));
         }
     }
 

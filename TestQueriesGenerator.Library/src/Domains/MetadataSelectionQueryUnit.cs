@@ -19,79 +19,79 @@ namespace TestQueriesGenerator.Library.Domains
             RuntimeID = rtID;
         }
 
-        [XmlAttribute (MetaAttribute.Agency)]
+        [XmlAttribute (Metadata.Agency)]
         public bool Agency { get; set; }
 
-        [XmlAttribute (MetaAttribute.Description)]
+        [XmlAttribute (Metadata.Description)]
         public bool Description { get; set; }
 
-        [XmlAttribute (MetaAttribute.Department)]
+        [XmlAttribute (Metadata.Department)]
         public bool Department { get; set; }
 
-        [XmlAttribute (MetaAttribute.Title)]
+        [XmlAttribute (Metadata.Title)]
         public bool Title { get; set; }
 
-        [XmlAttribute (MetaAttribute.Type)]
+        [XmlAttribute (Metadata.Type)]
         public bool Type { get; set; }
 
-        [XmlAttribute (MetaAttribute.UserField1)]
+        [XmlAttribute (Metadata.UserField1)]
         public bool UserField1 { get; set; }
 
-        [XmlAttribute (MetaAttribute.UserField2)]
+        [XmlAttribute (Metadata.UserField2)]
         public bool UserField2 { get; set; }
 
-        [XmlAttribute (MetaAttribute.UserField3)]
+        [XmlAttribute (Metadata.UserField3)]
         public bool UserField3 { get; set; }
 
-        [XmlAttribute (MetaAttribute.UserField4)]
+        [XmlAttribute (Metadata.UserField4)]
         public bool UserField4 { get; set; }
 
-        [XmlAttribute (MetaAttribute.RecordTime)]
+        [XmlAttribute (Metadata.RecordTime)]
         public bool RecordTime { get; set; }
 
-        [XmlAttribute (MetaAttribute.ModifiedTime)]
+        [XmlAttribute (Metadata.ModifiedTime)]
         public bool ModifiedTime { get; set; }
 
-        [XmlAttribute (MetaAttribute.KillDate)]
+        [XmlAttribute (Metadata.KillDate)]
         public bool KillDate { get; set; }
 
-        [XmlAttribute (MetaAttribute.SOM)]
+        [XmlAttribute (Metadata.SOM)]
         public bool SOM { get; set; }
 
-        [XmlAttribute (MetaAttribute.DAR)]
+        [XmlAttribute (Metadata.DAR)]
         public bool DAR { get; set; }
 
-        [XmlAttribute (MetaAttribute.GOP)]
+        [XmlAttribute (Metadata.GOP)]
         public bool GOP { get; set; }
 
-        [XmlAttribute (MetaAttribute.FileSize)]
+        [XmlAttribute (Metadata.FileSize)]
         public bool FileSize { get; set; }
 
-        [XmlAttribute (MetaAttribute.Resolution)]
+        [XmlAttribute (Metadata.Resolution)]
         public bool Resolution { get; set; }
 
-        [XmlAttribute (MetaAttribute.VideoFormat)]
+        [XmlAttribute (Metadata.VideoFormat)]
         public bool VideoFormat { get; set; }
 
-        [XmlAttribute (MetaAttribute.BitRate)]
+        [XmlAttribute (Metadata.BitRate)]
         public bool BitRate { get; set; }
 
-        [XmlAttribute (MetaAttribute.Handle)]
+        [XmlAttribute (Metadata.Handle)]
         public bool Handle { get; set; }
 
-        [XmlAttribute (MetaAttribute.Link)]
+        [XmlAttribute (Metadata.Link)]
         public bool Link { get; set; }
 
-        [XmlAttribute (MetaAttribute.MachineName)]
+        [XmlAttribute (Metadata.MachineName)]
         public bool MachineName { get; set; }
 
-        [XmlAttribute (MetaAttribute.UserName)]
+        [XmlAttribute (Metadata.UserName)]
         public bool UserName { get; set; }
 
-        [XmlAttribute (MetaAttribute.AudioBits)]
+        [XmlAttribute (Metadata.AudioBits)]
         public bool AudioBits { get; set; }
 
-        [XmlAttribute (MetaAttribute.AudioChannels)]
+        [XmlAttribute (Metadata.AudioChannels)]
         public bool AudioChannels { get; set; }
 
 
