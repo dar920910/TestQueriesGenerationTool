@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="MetadataServiceTest.cs" company="Demo Projects Workshop">
+// <copyright file="RequestServiceTest.cs" company="Demo Projects Workshop">
 //     Copyright (c) Demo Projects Workshop. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -11,7 +11,7 @@ using TestQueriesGenerator.Library.Services;
 /// <summary>
 /// Contains unit tests for the MetadataService class.
 /// </summary>
-public class MetadataServiceTest
+public class RequestServiceTest
 {
     private const string MetadataPrefix = "TEST";
 
@@ -22,7 +22,7 @@ public class MetadataServiceTest
     [Test]
     public void GetIdName_WhenValueLevel1()
     {
-        string idNumber = MetadataService.CreateIdName(MetadataPrefix, 500_000);
+        string idNumber = RequestService.CreateIdName(MetadataPrefix, 500_000);
         Assert.That(actual: idNumber, Is.EqualTo("TEST_0500000"));
     }
 
@@ -33,7 +33,7 @@ public class MetadataServiceTest
     [Test]
     public void GetIdName_WhenValueLevel2()
     {
-        string idNumber = MetadataService.CreateIdName(MetadataPrefix, 50_000);
+        string idNumber = RequestService.CreateIdName(MetadataPrefix, 50_000);
         Assert.That(actual: idNumber, Is.EqualTo("TEST_0050000"));
     }
 
@@ -44,7 +44,7 @@ public class MetadataServiceTest
     [Test]
     public void GetIdName_WhenValueLevel3()
     {
-        string idNumber = MetadataService.CreateIdName(MetadataPrefix, 5_000);
+        string idNumber = RequestService.CreateIdName(MetadataPrefix, 5_000);
         Assert.That(actual: idNumber, Is.EqualTo("TEST_0005000"));
     }
 
@@ -55,7 +55,7 @@ public class MetadataServiceTest
     [Test]
     public void GetIdName_WhenValueLevel4()
     {
-        string idNumber = MetadataService.CreateIdName(MetadataPrefix, 500);
+        string idNumber = RequestService.CreateIdName(MetadataPrefix, 500);
         Assert.That(actual: idNumber, Is.EqualTo("TEST_0000500"));
     }
 
@@ -66,7 +66,7 @@ public class MetadataServiceTest
     [Test]
     public void GetIdName_WhenValueLevel5()
     {
-        string idNumber = MetadataService.CreateIdName(MetadataPrefix, 50);
+        string idNumber = RequestService.CreateIdName(MetadataPrefix, 50);
         Assert.That(actual: idNumber, Is.EqualTo("TEST_0000050"));
     }
 
@@ -77,7 +77,7 @@ public class MetadataServiceTest
     [Test]
     public void GetIdName_WhenValueLevel6()
     {
-        string idNumber = MetadataService.CreateIdName(MetadataPrefix, 5);
+        string idNumber = RequestService.CreateIdName(MetadataPrefix, 5);
         Assert.That(actual: idNumber, Is.EqualTo("TEST_0000005"));
     }
 
@@ -87,7 +87,7 @@ public class MetadataServiceTest
     [Test]
     public void GetIdName_WhenMaximumAvailableValue()
     {
-        string idNumber = MetadataService.CreateIdName(MetadataPrefix, 999_999);
+        string idNumber = RequestService.CreateIdName(MetadataPrefix, 999_999);
         Assert.That(actual: idNumber, Is.EqualTo("TEST_0999999"));
     }
 
@@ -97,7 +97,7 @@ public class MetadataServiceTest
     [Test]
     public void GetIdName_WhenMinimumAvailableValue()
     {
-        string idNumber = MetadataService.CreateIdName(MetadataPrefix, 0);
+        string idNumber = RequestService.CreateIdName(MetadataPrefix, 0);
         Assert.That(actual: idNumber, Is.EqualTo("TEST_0000000"));
     }
 }
