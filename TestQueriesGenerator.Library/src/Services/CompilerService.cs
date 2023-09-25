@@ -7,6 +7,7 @@
 namespace TestQueriesGenerator.Library.Services;
 
 using System.Diagnostics;
+using System.Xml.Serialization;
 using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Entities;
 
@@ -23,10 +24,22 @@ public static class CompilerService
 
     private static readonly string ConfigHomeDirectory;
 
+    /// <summary>
+    /// Gets the path to the configuration file of scalable requests.
+    /// </summary>
+    /// <value>The path to configuration file.</value>
     public static string ScaleRequestConfigPath { get; }
 
+    /// <summary>
+    /// Gets the path to the configuration file for units of selection queries.
+    /// </summary>
+    /// <value>The path to configuration file.</value>
     public static string RequestGetTypeConfigPath { get; }
 
+    /// <summary>
+    /// Gets the path to the configuration file for units of creation queries.
+    /// </summary>
+    /// <value>The path to configuration file.</value>
     public static string RequestSetTypeConfigPath { get; }
 
     public static bool IsReady { get; }
@@ -76,30 +89,9 @@ public static class CompilerService
         expectedRequestsCount = 0;
     }
 
-    private static bool HasScaleRequestConfig(string requestConfigPath)
-    {
-        if (File.Exists(requestConfigPath))
-        {
-            OutConfigStatusIsSuccess(requestConfigPath);
-            return true;
-        }
-        else
-        {
-            OutConfigStatusIsFailed(requestConfigPath);
-            return false;
-        }
-    }
-
-    private static void OutConfigStatusIsSuccess(string configPath)
-    {
-        WriteLine(" [SUCCESS]: \'{0}\' config file was successfully found.", configPath);
-    }
-
-    private static void OutConfigStatusIsFailed(string configPath)
-    {
-        WriteLine(" [FAILED]: \'{0}\' config file was not detected.", configPath);
-    }
-
+    /// <summary>
+    /// Execute compilation of all valid queries described in configuration files.
+    /// </summary>
     public static void Run()
     {
         OutBeforeCompilation();
@@ -126,14 +118,48 @@ public static class CompilerService
         }
     }
 
+    private static bool HasScaleRequestConfig(string requestConfigPath)
+    {
+        if (File.Exists(requestConfigPath))
+        {
+            OutConfigStatusIsSuccess(requestConfigPath);
+            return true;
+        }
+        else
+        {
+            OutConfigStatusIsFailed(requestConfigPath);
+            return false;
+        }
+    }
+
+    private static void OutConfigStatusIsSuccess(string configPath)
+    {
+        WriteLine(" [SUCCESS]: \'{0}\' config file was successfully found.", configPath);
+    }
+
+    private static void OutConfigStatusIsFailed(string configPath)
+    {
+        WriteLine(" [FAILED]: \'{0}\' config file was not detected.", configPath);
+    }
+
     private static List<ScalableEntity> RetrieveScalableEntities()
     {
-        return DeserializationService.DeserializeScalableEntities();
+        var scaleEntities = new List<ScalableEntity>();
+
+        var xsScales = new XmlSerializer(typeof(List<ScalableEntity>));
+        string path = ScaleRequestConfigPath;
+
+        using (FileStream xmlLoad = File.Open(path, FileMode.Open))
+        {
+            scaleEntities = (List<ScalableEntity>)xsScales.Deserialize(xmlLoad);
+        }
+
+        return scaleEntities;
     }
 
     private static string CompileScaleGetRequest(List<ScalableEntity> scales, bool isDebugMode)
     {
-        List<MetadataSelectionQueryUnit> queryUnits = DeserializationService.DeserializeMetadataSelectionQueryUnits();
+        List<MetadataSelectionQueryUnit> queryUnits = DeserializeMetadataSelectionQueryUnits();
         Dictionary<MetadataSelectionQueryUnit, ScalableEntity> queryScales = RequestService.CombineMetadataSelectionQueryScales(queryUnits, scales);
         List<MetadataSelectionQueryUnit> metadataGetUnits = RequestService.CreateGetUnitsList(queryScales);
         ScaleGetMetaRequest scaleGetRequest = RequestService.CreateScaleGetRequest(metadataGetUnits);
@@ -141,14 +167,44 @@ public static class CompilerService
         return scaleGetRequest.Compile(isDebugMode);
     }
 
+    private static List<MetadataSelectionQueryUnit> DeserializeMetadataSelectionQueryUnits()
+    {
+        var queryUnits = new List<MetadataSelectionQueryUnit>();
+
+        string getPath = RequestGetTypeConfigPath;
+        var xsGetUnits = new XmlSerializer(typeof(List<MetadataSelectionQueryUnit>));
+
+        using (FileStream xmlLoad = File.Open(getPath, FileMode.Open))
+        {
+            queryUnits = (List<MetadataSelectionQueryUnit>)xsGetUnits.Deserialize(xmlLoad);
+        }
+
+        return queryUnits;
+    }
+
     private static string CompileScaleSetRequest(List<ScalableEntity> scales, bool isDebugMode)
     {
-        List<MetadataCreationQueryUnit> queryUnits = DeserializationService.DeserializeMetadataCreationQueryUnits();
+        List<MetadataCreationQueryUnit> queryUnits = DeserializeMetadataCreationQueryUnits();
         Dictionary<MetadataCreationQueryUnit, ScalableEntity> queryScales = RequestService.CombineMetadataCreationQueryScales(queryUnits, scales);
         List<MetadataCreationQueryUnit> metadataSetUnits = RequestService.CreateSetUnitsList(queryScales);
         ScaleSetMetaRequest scaleSetRequest = RequestService.CreateScaleSetRequest(metadataSetUnits);
 
         return scaleSetRequest.Compile(isDebugMode);
+    }
+
+    private static List<MetadataCreationQueryUnit> DeserializeMetadataCreationQueryUnits()
+    {
+        var queryUnits = new List<MetadataCreationQueryUnit>();
+
+        string setPath = RequestSetTypeConfigPath;
+        var xsSetUnits = new XmlSerializer(typeof(List<MetadataCreationQueryUnit>));
+
+        using (FileStream xmlLoad = File.Open(setPath, FileMode.Open))
+        {
+            queryUnits = (List<MetadataCreationQueryUnit>)xsSetUnits.Deserialize(xmlLoad);
+        }
+
+        return queryUnits;
     }
 
     public static void Trace(string request)

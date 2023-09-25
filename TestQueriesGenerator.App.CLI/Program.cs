@@ -12,7 +12,7 @@ using TestQueriesGenerator.Library.Entities;
 using TestQueriesGenerator.Library.Services;
 using static System.Console;
 using static TestQueriesGenerator.Library.Services.CompiledOutputService;
-using static TestQueriesGenerator.Library.Services.DeserializationService;
+//using static TestQueriesGenerator.Library.Services.DeserializationService;
 using static TestQueriesGenerator.Library.Services.RequestService;
 
 #if TESTING
@@ -28,19 +28,6 @@ void TestConfiguration()
     WriteLine("{0}: {1}", nameof(CompilerService.ScaleRequestConfigPath), CompilerService.ScaleRequestConfigPath);
     WriteLine("{0}: {1}", nameof(CompilerService.RequestGetTypeConfigPath), CompilerService.RequestGetTypeConfigPath);
     WriteLine("{0}: {1}", nameof(CompilerService.RequestSetTypeConfigPath), CompilerService.RequestSetTypeConfigPath);
-}
-
-void TestDeserialization()
-{
-    List<ScalableEntity> scales = DeserializeScalableEntities();
-    List<MetadataSelectionQueryUnit> getUnits = DeserializeMetadataSelectionQueryUnits();
-    List<MetadataCreationQueryUnit> setUnits = DeserializeMetadataCreationQueryUnits();
-
-    Dictionary<MetadataSelectionQueryUnit, ScalableEntity> metadataGetScales = CombineMetadataSelectionQueryScales(getUnits, scales);
-    Dictionary<MetadataCreationQueryUnit, ScalableEntity> metadataSetScales = CombineMetadataCreationQueryScales(setUnits, scales);
-
-    OutGetScales(metadataGetScales);
-    OutSetScales(metadataSetScales);
 }
 
 void TestRequests()
