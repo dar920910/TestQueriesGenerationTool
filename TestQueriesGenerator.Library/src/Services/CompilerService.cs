@@ -238,6 +238,9 @@ public static class CompilerService
 
     private static void OutSeparator()
     {
-        WriteLine("{0}", BuildSeparator(150));
+        char sepSymbol = '-';
+        byte sepCount = 150;
+
+        WriteLine("{0}", new string(sepSymbol, sepCount));
     }
 }

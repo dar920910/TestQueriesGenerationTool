@@ -2,36 +2,6 @@ namespace TestQueriesGenerator.Library.Services
 {
     public static class GeneratorService
     {
-        public static string BuildSeparator()
-        {
-            string separator = string.Empty;
-            
-            char sepSymbol = '-'; // a custom value
-            byte sepCount = 75; // a custom value
-
-            for (int i = 0; i < sepCount; i++)
-            {
-                separator += sepSymbol;
-            }
-
-            return separator;
-        }
-
-        public static string BuildSeparator(byte count)
-        {
-            string separator = string.Empty;
-            
-            char sepSymbol = '-';
-            byte sepCount = count;
-
-            for (int i = 0; i < sepCount; i++)
-            {
-                separator += sepSymbol;
-            }
-
-            return separator;
-        }
-
         public static string GetIdNumber(uint number)
         {
             string targetNumber;
