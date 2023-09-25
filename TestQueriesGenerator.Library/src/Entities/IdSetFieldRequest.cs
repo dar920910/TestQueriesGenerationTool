@@ -1,35 +1,41 @@
+//-----------------------------------------------------------------------
+// <copyright file="IdSetFieldRequest.cs" company="Demo Projects Workshop">
+//     Copyright (c) Demo Projects Workshop. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace TestQueriesGenerator.Library.Entities;
+
 using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Services;
 
-namespace TestQueriesGenerator.Library.Entities
+public class IdSetFieldRequest : AbstractMetadataFieldRequest, ICompilableRequest
 {
-    public class IdSetFieldRequest : AbstractMetadataFieldRequest, ICompilableRequest
+    private readonly string value;
+
+    public IdSetFieldRequest(string idName, string metadataField, string metadataValue)
     {
-        string value;
-        public IdSetFieldRequest(string idName, string metadataField, string metadataValue)
-        {
-            command = "set_field";
-            targetID = idName;
-            metadataFieldName = metadataField;
-            value = metadataValue;
+        this.command = "set_field";
+        this.targetID = idName;
+        this.metadataFieldName = metadataField;
+        this.value = metadataValue;
 
-            CompilerService.Assign();
+        CompilerService.Assign();
+    }
+
+    public string Compile(bool isDebugMode)
+    {
+        string compiledRequest = this.command + " " + this.metadataFieldName + " " + this.value + " " + this.targetID;
+
+        CompilerService.Trace(compiledRequest);
+
+        if (isDebugMode)
+        {
+            return compiledRequest;
         }
-
-        public string Compile(bool isDebugMode)
+        else
         {
-            string compiledRequest = command + " " + metadataFieldName + " " + value + " " + targetID;
-
-            CompilerService.Trace(compiledRequest);
-
-            if (isDebugMode)
-            {
-                return compiledRequest;
-            }
-            else
-            {
-                return (compiledRequest += "&");
-            }
+            return compiledRequest += "&";
         }
     }
 }

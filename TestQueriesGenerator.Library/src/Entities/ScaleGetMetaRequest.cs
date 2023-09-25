@@ -1,35 +1,41 @@
+//-----------------------------------------------------------------------
+// <copyright file="ScaleGetMetaRequest.cs" company="Demo Projects Workshop">
+//     Copyright (c) Demo Projects Workshop. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace TestQueriesGenerator.Library.Entities;
+
 using TestQueriesGenerator.Library.Domains;
 
-namespace TestQueriesGenerator.Library.Entities
+public record ScaleGetMetaRequest : ICompilableRequest
 {
-    public class ScaleGetMetaRequest : ICompilableRequest
+    private readonly List<IdFullGetMetadataRequest> getRequests;
+
+    public ScaleGetMetaRequest(List<IdFullGetMetadataRequest> fullGetRequests)
     {
-        List<IdFullGetMetadataRequest> getRequests;
-        public ScaleGetMetaRequest(List<IdFullGetMetadataRequest> fullGetRequests)
+        this.getRequests = fullGetRequests;
+    }
+
+    public string Compile(bool isDebugMode)
+    {
+        string scaleRequest = string.Empty;
+
+        if (isDebugMode)
         {
-            getRequests = fullGetRequests;
+            foreach (var request in this.getRequests)
+            {
+                scaleRequest += request.Compile(true);
+            }
+        }
+        else
+        {
+            foreach (var request in this.getRequests)
+            {
+                scaleRequest += request.Compile(false);
+            }
         }
 
-        public string Compile(bool isDebugMode)
-        {
-            string scaleRequest = string.Empty;
-
-            if (isDebugMode)
-            {
-                foreach (var request in getRequests)
-                {
-                    scaleRequest += request.Compile(true);
-                }
-            }
-            else
-            {
-                foreach (var request in getRequests)
-                {
-                    scaleRequest += request.Compile(false);
-                }
-            }
-
-            return scaleRequest;
-        }
+        return scaleRequest;
     }
 }

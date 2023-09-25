@@ -1,35 +1,41 @@
+//-----------------------------------------------------------------------
+// <copyright file="IdFullGetMetadataRequest.cs" company="Demo Projects Workshop">
+//     Copyright (c) Demo Projects Workshop. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace TestQueriesGenerator.Library.Entities;
+
 using TestQueriesGenerator.Library.Domains;
 
-namespace TestQueriesGenerator.Library.Entities
+public record IdFullGetMetadataRequest : ICompilableRequest
 {
-    public class IdFullGetMetadataRequest : ICompilableRequest
+    private readonly List<IdGetFieldRequest> getMetadataRequests;
+
+    public IdFullGetMetadataRequest(List<IdGetFieldRequest> idGetFieldRequests)
     {
-        List<IdGetFieldRequest> getMetadataRequests;
-        public IdFullGetMetadataRequest(List<IdGetFieldRequest> idGetFieldRequests)
+        this.getMetadataRequests = idGetFieldRequests;
+    }
+
+    public string Compile(bool isDebugMode)
+    {
+        string targetRequest = string.Empty;
+
+        if (isDebugMode)
         {
-            getMetadataRequests = idGetFieldRequests;
+            foreach (var getRequest in this.getMetadataRequests)
+            {
+                targetRequest += getRequest.Compile(true) + "\n";
+            }
+        }
+        else
+        {
+            foreach (var getRequest in this.getMetadataRequests)
+            {
+                targetRequest += getRequest.Compile(false);
+            }
         }
 
-        public string Compile(bool isDebugMode)
-        {
-            string targetRequest = string.Empty;
-
-            if (isDebugMode)
-            {
-                foreach (var getRequest in getMetadataRequests)
-                {
-                    targetRequest += getRequest.Compile(true) + "\n";
-                }
-            }
-            else
-            {
-                foreach (var getRequest in getMetadataRequests)
-                {
-                    targetRequest += getRequest.Compile(false);
-                }
-            }
-
-            return  targetRequest;
-        }
+        return targetRequest;
     }
 }
