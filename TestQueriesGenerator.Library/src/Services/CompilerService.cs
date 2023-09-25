@@ -187,10 +187,7 @@ public static class CompilerService
             for (uint idCount = getScale.Value.FirstScalePostfixNumber; idCount <= getScale.Value.LastScalePostfixNumber; idCount++)
             {
                 string idName = CreateIdName(getScale.Value.IdNamePrefix, idCount);
-
-                var unit = new MetadataSelectionQueryUnit(idName);
-                unit.Mirror(getScale.Key);
-
+                MetadataSelectionQueryUnit unit = new (idName, getScale.Key);
                 queryUnits.Add(unit);
             }
         }
@@ -224,10 +221,7 @@ public static class CompilerService
             for (uint idCount = setScale.Value.FirstScalePostfixNumber; idCount <= setScale.Value.LastScalePostfixNumber; idCount++)
             {
                 string idName = CreateIdName(setScale.Value.IdNamePrefix, idCount);
-
-                var unit = new MetadataCreationQueryUnit(idName);
-                unit.Mirror(setScale.Key);
-
+                MetadataCreationQueryUnit unit = new (idName, setScale.Key);
                 queryUnits.Add(unit);
             }
         }
