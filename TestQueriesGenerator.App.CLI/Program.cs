@@ -11,8 +11,6 @@ using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Entities;
 using TestQueriesGenerator.Library.Services;
 using static System.Console;
-using static TestQueriesGenerator.Library.Services.CompiledOutputService;
-//using static TestQueriesGenerator.Library.Services.DeserializationService;
 using static TestQueriesGenerator.Library.Services.RequestService;
 
 #if TESTING
@@ -20,7 +18,7 @@ TestConfiguration();
 TestDeserialization();
 TestRequests();
 #else
-TestQueriesGenerator.Library.Services.CompilerService.Run();
+CompilerService.Run();
 #endif
 
 void TestConfiguration()
@@ -43,9 +41,9 @@ void TestRequests()
     string scaleGetRequestString = scaleGetRequest.Compile(true);
     string scaleSetRequestString = scaleSetRequest.Compile(true);
 
-    OutToConsole(scaleGetRequestString);
-    OutToConsole(scaleSetRequestString);
+    CompilerService.OutToConsole(scaleGetRequestString);
+    CompilerService.OutToConsole(scaleSetRequestString);
 
-    OutToFile(scaleGetRequestString, "resultsGet.txt");
-    OutToFile(scaleSetRequestString, "resultsSet.txt");
+    CompilerService.OutToFile(scaleGetRequestString, "resultsGet.txt");
+    CompilerService.OutToFile(scaleSetRequestString, "resultsSet.txt");
 }

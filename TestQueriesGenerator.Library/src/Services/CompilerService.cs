@@ -21,8 +21,10 @@ public static class CompilerService
     private const string ScaleRequestCfgFileName = "request.xml";
     private const string RequestGetTypeCfgFileName = "units-get.xml";
     private const string RequestSetTypeCfgFileName = "units-set.xml";
+    private const string ResultOutputFileName = "requests.test";
 
     private static readonly string ConfigHomeDirectory;
+    private static readonly string ResultOutputFilePath;
 
     /// <summary>
     /// Gets the path to the configuration file of scalable requests.
@@ -85,6 +87,14 @@ public static class CompilerService
 
         IsReady = isScaleCfgReady && isRequestGetCfgReady && isRequestSetCfgReady;
 
+        string outDirectory = Directory.GetCurrentDirectory() + @"\~out\";
+        if (!Directory.Exists(outDirectory))
+        {
+            Directory.CreateDirectory(outDirectory);
+        }
+
+        ResultOutputFilePath = Path.Combine(outDirectory, ResultOutputFileName);
+
         actualRequestsCount = 0;
         expectedRequestsCount = 0;
     }
@@ -108,13 +118,78 @@ public static class CompilerService
             string compiledScaleSetRequest = CompileScaleSetRequest(scales, true);
 
             string[] compiledRequests = { compiledScaleGetRequest, compiledScaleSetRequest };
-            CompiledOutputService.OutToFile(compiledRequests);
+            OutToFile(compiledRequests);
 
             ProcessCompilationFinish(ref compilationStopwatch);
         }
         else
         {
             OutCompilationIsImpossible();
+        }
+    }
+
+    public static void OutToConsole(string compiledRequestString)
+    {
+        WriteLine(compiledRequestString);
+    }
+
+    public static void OutToConsole(string[] compiledRequestStrings)
+    {
+        foreach (var request in compiledRequestStrings)
+        {
+            WriteLine(request);
+        }
+    }
+
+    public static void OutToFile(string compiledRequest)
+    {
+        var outputStream = new StreamWriter(ResultOutputFilePath, append: false);
+        outputStream.Write(compiledRequest);
+        outputStream.Close();
+    }
+
+    public static void OutToFile(string[] compiledRequests)
+    {
+        var outputStream = new StreamWriter(ResultOutputFilePath, append: false);
+
+        foreach (var request in compiledRequests)
+        {
+            outputStream.Write(request);
+        }
+
+        outputStream.Close();
+    }
+
+    public static void OutToFile(string compiledRequest, string targetFile)
+    {
+        try
+        {
+            var outputStream = new StreamWriter(targetFile, append: false);
+            outputStream.Write(compiledRequest);
+            outputStream.Close();
+        }
+        catch (FileNotFoundException exception)
+        {
+            WriteLine(exception.Message);
+        }
+    }
+
+    public static void OutToFile(string[] compiledRequests, string targetFile)
+    {
+        try
+        {
+            var outputStream = new StreamWriter(targetFile, append: false);
+
+            foreach (var request in compiledRequests)
+            {
+                outputStream.Write(request);
+            }
+
+            outputStream.Close();
+        }
+        catch (FileNotFoundException exception)
+        {
+            WriteLine(exception.Message);
         }
     }
 
