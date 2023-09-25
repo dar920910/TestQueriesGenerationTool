@@ -11,7 +11,6 @@ using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Entities;
 using TestQueriesGenerator.Library.Services;
 using static System.Console;
-using static TestQueriesGenerator.Library.Services.RequestService;
 
 #if TESTING
 TestConfiguration();
@@ -32,18 +31,18 @@ void TestRequests()
 {
     var scale = new ScalableEntity("test", "ScalableTest", 0, 1000);
 
-    List<MetadataSelectionQueryUnit> metadataGetUnits = CreateGetUnitsList(scale);
-    List<MetadataCreationQueryUnit> metadataSetUnits = CreateSetUnitsList(scale);
+    List<MetadataSelectionQueryUnit> metadataGetUnits = CompilerService.CreateGetUnitsList(scale);
+    List<MetadataCreationQueryUnit> metadataSetUnits = CompilerService.CreateSetUnitsList(scale);
 
-    ScaleGetMetaRequest scaleGetRequest = CreateScaleGetRequest(metadataGetUnits);
-    ScaleSetMetaRequest scaleSetRequest = CreateScaleSetRequest(metadataSetUnits);
+    ScaleGetMetaRequest scaleGetRequest = CompilerService.CreateScaleGetRequest(metadataGetUnits);
+    ScaleSetMetaRequest scaleSetRequest = CompilerService.CreateScaleSetRequest(metadataSetUnits);
 
     string scaleGetRequestString = scaleGetRequest.Compile(true);
     string scaleSetRequestString = scaleSetRequest.Compile(true);
 
-    CompilerService.OutToConsole(scaleGetRequestString);
-    CompilerService.OutToConsole(scaleSetRequestString);
+    OutputConsoleDevice.OutCompiledRequest(scaleGetRequestString);
+    OutputConsoleDevice.OutCompiledRequest(scaleSetRequestString);
 
-    CompilerService.OutToFile(scaleGetRequestString, "resultsGet.txt");
-    CompilerService.OutToFile(scaleSetRequestString, "resultsSet.txt");
+    CompilerService.WriteSingleCompiledRequestToTargetFile(scaleGetRequestString, "resultsGet.txt");
+    CompilerService.WriteSingleCompiledRequestToTargetFile(scaleSetRequestString, "resultsSet.txt");
 }
