@@ -11,7 +11,6 @@ using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Entities;
 
 using static System.Console;
-using static TestQueriesGenerator.Library.Services.GeneratorService;
 
 /// <summary>
 /// Represents static methods to provide features of queries compilation.
