@@ -4,6 +4,9 @@
         "documentationRules": {
             "companyName": "Demo Projects Workshop",
             "copyrightText": "Copyright (c) {companyName}. All rights reserved."
+        },
+        "orderingRules": {
+            "usingDirectivesPlacement": "outsideNamespace"
         }
     }
 }

@@ -26,31 +26,14 @@ public static class CompilerService
     private static readonly string ConfigHomeDirectory;
     private static readonly string ResultOutputFilePath;
 
-    /// <summary>
-    /// Gets the path to the configuration file of scalable requests.
-    /// </summary>
-    /// <value>The path to configuration file.</value>
-    public static string ScaleRequestConfigPath { get; }
-
-    /// <summary>
-    /// Gets the path to the configuration file for units of selection queries.
-    /// </summary>
-    /// <value>The path to configuration file.</value>
-    public static string RequestGetTypeConfigPath { get; }
-
-    /// <summary>
-    /// Gets the path to the configuration file for units of creation queries.
-    /// </summary>
-    /// <value>The path to configuration file.</value>
-    public static string RequestSetTypeConfigPath { get; }
-
-    public static bool IsReady { get; }
-
+    private static bool isReadyToCompilation;
     private static string datetimeCompilationStart;
     private static string datetimeCompilationFinish;
-    private static uint actualRequestsCount;
-    public static uint expectedRequestsCount;
+    private static uint compiledRequestsCount;
 
+    /// <summary>
+    /// Initializes static members of the <see cref="CompilerService"/> class.
+    /// </summary>
     static CompilerService()
     {
         ConfigHomeDirectory = Directory.GetCurrentDirectory() + @"\~cfg\";
@@ -85,7 +68,7 @@ public static class CompilerService
             isRequestSetCfgReady = true;
         }
 
-        IsReady = isScaleCfgReady && isRequestGetCfgReady && isRequestSetCfgReady;
+        isReadyToCompilation = isScaleCfgReady && isRequestGetCfgReady && isRequestSetCfgReady;
 
         string outDirectory = Directory.GetCurrentDirectory() + @"\~out\";
         if (!Directory.Exists(outDirectory))
@@ -95,9 +78,26 @@ public static class CompilerService
 
         ResultOutputFilePath = Path.Combine(outDirectory, ResultOutputFileName);
 
-        actualRequestsCount = 0;
-        expectedRequestsCount = 0;
+        compiledRequestsCount = 0;
     }
+
+    /// <summary>
+    /// Gets the path to the configuration file of scalable requests.
+    /// </summary>
+    /// <value>The path to configuration file.</value>
+    public static string ScaleRequestConfigPath { get; }
+
+    /// <summary>
+    /// Gets the path to the configuration file for units of selection queries.
+    /// </summary>
+    /// <value>The path to configuration file.</value>
+    public static string RequestGetTypeConfigPath { get; }
+
+    /// <summary>
+    /// Gets the path to the configuration file for units of creation queries.
+    /// </summary>
+    /// <value>The path to configuration file.</value>
+    public static string RequestSetTypeConfigPath { get; }
 
     /// <summary>
     /// Execute compilation of all valid queries described in configuration files.
@@ -106,7 +106,7 @@ public static class CompilerService
     {
         OutBeforeCompilation();
 
-        if (IsReady)
+        if (isReadyToCompilation)
         {
             var compilationStopwatch = new Stopwatch();
 
@@ -128,6 +128,23 @@ public static class CompilerService
         }
     }
 
+    /// <summary>
+    /// Registers request compilation for the compiler service.
+    /// </summary>
+    /// <param name="request">Request compilation message.</param>
+    public static void Register(string request)
+    {
+        compiledRequestsCount++;
+
+        Write(" >---> [ {0} ]: \'{1}\'", GetCompilationTime(), request);
+        WriteLine(" >---> request # {0}", compiledRequestsCount);
+    }
+
+    /// <summary>
+    /// Writes compiled requests to a specified text file.
+    /// </summary>
+    /// <param name="compiledRequests">Array of compiled request strings.</param>
+    /// <param name="targetFile">Output file name.</param>
     public static void WriteCompiledRequestsToTargetFile(string[] compiledRequests, string targetFile)
     {
         using (StreamWriter outputStream = new (targetFile, append: false))
@@ -146,6 +163,11 @@ public static class CompilerService
         }
     }
 
+    /// <summary>
+    /// Writes a single compiled request to a specified text file.
+    /// </summary>
+    /// <param name="singleCompiledRequest">A single compiled request string.</param>
+    /// <param name="targetFile">Output file name.</param>
     public static void WriteSingleCompiledRequestToTargetFile(string singleCompiledRequest, string targetFile)
     {
         using (StreamWriter outputStream = new (targetFile, append: false))
@@ -161,6 +183,11 @@ public static class CompilerService
         }
     }
 
+    /// <summary>
+    /// Creates requests to get values of metadata fields for a single scalable entity.
+    /// </summary>
+    /// <param name="scale">User-defined scalable entity.</param>
+    /// <returns>The list of query units to get values of metadata fields.</returns>
     public static List<MetadataSelectionQueryUnit> CreateGetUnitsList(ScalableEntity scale)
     {
         var queryUnits = new List<MetadataSelectionQueryUnit>();
@@ -178,6 +205,11 @@ public static class CompilerService
         return queryUnits;
     }
 
+    /// <summary>
+    /// Creates a list of requests to get values of metadata fields for many scalable entities.
+    /// </summary>
+    /// <param name="getScales">User-defined dictionary of query units with its scalable entities.</param>
+    /// <returns>The list of query units to get values of metadata fields.</returns>
     public static List<MetadataSelectionQueryUnit> CreateGetUnitsList(Dictionary<MetadataSelectionQueryUnit, ScalableEntity> getScales)
     {
         var queryUnits = new List<MetadataSelectionQueryUnit>();
@@ -195,6 +227,11 @@ public static class CompilerService
         return queryUnits;
     }
 
+    /// <summary>
+    /// Creates requests to set values of metadata fields for a single scalable entity.
+    /// </summary>
+    /// <param name="scale">User-defined scalable entity.</param>
+    /// <returns>The list of query units to set values of metadata fields.</returns>
     public static List<MetadataCreationQueryUnit> CreateSetUnitsList(ScalableEntity scale)
     {
         var queryUnits = new List<MetadataCreationQueryUnit>();
@@ -212,6 +249,11 @@ public static class CompilerService
         return queryUnits;
     }
 
+    /// <summary>
+    /// Creates a list of requests to set values of metadata fields for many scalable entities.
+    /// </summary>
+    /// <param name="setScales">User-defined dictionary of query units with its scalable entities.</param>
+    /// <returns>The list of query units to set values of metadata fields.</returns>
     public static List<MetadataCreationQueryUnit> CreateSetUnitsList(Dictionary<MetadataCreationQueryUnit, ScalableEntity> setScales)
     {
         var queryUnits = new List<MetadataCreationQueryUnit>();
@@ -229,6 +271,11 @@ public static class CompilerService
         return queryUnits;
     }
 
+    /// <summary>
+    /// Creates a scalable request to get values of metadata fields for many query units.
+    /// </summary>
+    /// <param name="queryUnits">User-defined list of query units.</param>
+    /// <returns>Scalable request to get values of metadata fields.</returns>
     public static ScaleGetMetaRequest CreateScaleGetRequest(List<MetadataSelectionQueryUnit> queryUnits)
     {
         var fullGetRequests = new List<IdFullGetMetadataRequest>();
@@ -247,6 +294,11 @@ public static class CompilerService
         return new ScaleGetMetaRequest(fullGetRequests);
     }
 
+    /// <summary>
+    /// Creates a scalable request to set values of metadata fields for many query units.
+    /// </summary>
+    /// <param name="queryUnits">User-defined list of query units.</param>
+    /// <returns>Scalable request to set values of metadata fields.</returns>
     public static ScaleSetMetaRequest CreateScaleSetRequest(List<MetadataCreationQueryUnit> queryUnits)
     {
         var fullSetRequests = new List<IdFullSetMetadataRequest>();
@@ -265,6 +317,12 @@ public static class CompilerService
         return new ScaleSetMetaRequest(fullSetRequests);
     }
 
+    /// <summary>
+    /// Creates identifier's name by its prefix and number.
+    /// </summary>
+    /// <param name="prefix">User-defined prefix.</param>
+    /// <param name="number">User-defined number.</param>
+    /// <returns>The string name of a identifier.</returns>
     public static string CreateIdName(string prefix, uint number)
     {
         string targetNumber = default;
@@ -634,22 +692,6 @@ public static class CompilerService
         return queryUnits;
     }
 
-    public static void Trace(string request)
-    {
-        Write(" >---> [ {0} ]: \'{1}\'", GetCompilationTime(), request);
-        ShowCompilationStatus();
-    }
-
-    public static void ShowCompilationStatus()
-    {
-        WriteLine(" >---> request # {0} from {1} requests", ++actualRequestsCount, expectedRequestsCount);
-    }
-
-    public static void Assign()
-    {
-        expectedRequestsCount++;
-    }
-
     private static string GetCompilationTime()
     {
         string sep = " - ";
@@ -767,7 +809,7 @@ public static class CompilerService
         WriteLine(" [INFO] FINISH DATETIME: {0}", datetimeCompilationFinish);
         WriteLine(" [INFO] COMPILATION DURATION: {0}", timer.Elapsed);
         WriteLine();
-        WriteLine(" [RESULT] COMPILED REQUESTS: {0} from {1}", actualRequestsCount, expectedRequestsCount);
+        WriteLine(" [RESULT] COMPILED REQUESTS: {0}", compiledRequestsCount);
         WriteLine();
         OutSeparator();
         WriteLine();
