@@ -18,12 +18,15 @@ using static System.Console;
 /// </summary>
 public static class CompilerService
 {
+    private const string ConfigFolderName = "~cfg";
+    private const string OutputFolderName = "~out";
     private const string ScaleRequestCfgFileName = "request.xml";
     private const string RequestGetTypeCfgFileName = "units-get.xml";
     private const string RequestSetTypeCfgFileName = "units-set.xml";
     private const string ResultOutputFileName = "requests.test";
 
-    private static readonly string ConfigHomeDirectory;
+    private static readonly string ConfigDirectoryPath;
+    private static readonly string OutputDirectoryPath;
     private static readonly string ResultOutputFilePath;
 
     private static bool isReadyToCompilation;
@@ -36,15 +39,13 @@ public static class CompilerService
     /// </summary>
     static CompilerService()
     {
-        ConfigHomeDirectory = Directory.GetCurrentDirectory() + @"\~cfg\";
-        if (!Directory.Exists(ConfigHomeDirectory))
-        {
-            Directory.CreateDirectory(ConfigHomeDirectory);
-        }
+        string currentDirectory = Directory.GetCurrentDirectory();
 
-        string scaleRequestConfigPath = Path.Combine(ConfigHomeDirectory, ScaleRequestCfgFileName);
-        string requestGetTypeConfigPath = Path.Combine(ConfigHomeDirectory, RequestGetTypeCfgFileName);
-        string requestSetTypeConfigPath = Path.Combine(ConfigHomeDirectory, RequestSetTypeCfgFileName);
+        ConfigDirectoryPath = CreateTargetDirectory(currentDirectory, ConfigFolderName);
+
+        string scaleRequestConfigPath = Path.Combine(ConfigDirectoryPath, ScaleRequestCfgFileName);
+        string requestGetTypeConfigPath = Path.Combine(ConfigDirectoryPath, RequestGetTypeCfgFileName);
+        string requestSetTypeConfigPath = Path.Combine(ConfigDirectoryPath, RequestSetTypeCfgFileName);
 
         bool isScaleCfgReady = false;
         bool isRequestGetCfgReady = false;
@@ -70,13 +71,8 @@ public static class CompilerService
 
         isReadyToCompilation = isScaleCfgReady && isRequestGetCfgReady && isRequestSetCfgReady;
 
-        string outDirectory = Directory.GetCurrentDirectory() + @"\~out\";
-        if (!Directory.Exists(outDirectory))
-        {
-            Directory.CreateDirectory(outDirectory);
-        }
-
-        ResultOutputFilePath = Path.Combine(outDirectory, ResultOutputFileName);
+        OutputDirectoryPath = CreateTargetDirectory(currentDirectory, OutputFolderName);
+        ResultOutputFilePath = Path.Combine(OutputDirectoryPath, ResultOutputFileName);
 
         compiledRequestsCount = 0;
     }
@@ -364,6 +360,18 @@ public static class CompilerService
         }
 
         return prefix + "_" + targetNumber + number.ToString();
+    }
+
+    private static string CreateTargetDirectory(string appHomeDirectory, string targetFolder)
+    {
+        string targetDirectory = Path.Combine(appHomeDirectory, targetFolder);
+
+        if (Directory.Exists(targetDirectory) is false)
+        {
+            Directory.CreateDirectory(targetDirectory);
+        }
+
+        return targetDirectory;
     }
 
     private static void AddAllMetadataFieldsToGetUnit(MetadataSelectionQueryUnit getUnit, ref List<IdGetFieldRequest> getRequests)
