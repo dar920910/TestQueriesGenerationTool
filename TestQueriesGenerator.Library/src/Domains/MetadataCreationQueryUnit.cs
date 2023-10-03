@@ -50,6 +50,33 @@ public record MetadataCreationQueryUnit
     }
 
     /// <summary>
+    /// Gets entity's config state by default.
+    /// </summary>
+    /// <returns>The list of entities which support config state by default.</returns>
+    public static List<MetadataCreationQueryUnit> ConfigStateByDefault
+    {
+        get
+        {
+            return new List<MetadataCreationQueryUnit>()
+            {
+                new ()
+                {
+                    RuntimeID = "testSet",
+                    Agency = "agency",
+                    Description = "description",
+                    Department = "department",
+                    Title = "title",
+                    Type = "type",
+                    UserField1 = "userfield1",
+                    UserField2 = "userfield2",
+                    UserField3 = "userfield3",
+                    UserField4 = "userfield4",
+                },
+            };
+        }
+    }
+
+    /// <summary>
     /// Gets the name of the MetadataCreationQueryUnit object.
     /// </summary>
     /// <value>User-defined name of a unit.</value>

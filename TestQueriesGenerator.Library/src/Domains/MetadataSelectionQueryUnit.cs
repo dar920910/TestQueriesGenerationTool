@@ -66,6 +66,49 @@ public record MetadataSelectionQueryUnit
     }
 
     /// <summary>
+    /// Gets entity's config state by default.
+    /// </summary>
+    /// <returns>The list of entities which support config state by default.</returns>
+    public static List<MetadataSelectionQueryUnit> ConfigStateByDefault
+    {
+        get
+        {
+            return new List<MetadataSelectionQueryUnit>()
+            {
+                new ()
+                {
+                    RuntimeID = "testGet",
+                    Agency = true,
+                    Description = true,
+                    Department = true,
+                    Title = false,
+                    Type = false,
+                    UserField1 = false,
+                    UserField2 = false,
+                    UserField3 = false,
+                    UserField4 = false,
+                    RecordTime = false,
+                    ModifiedTime = false,
+                    KillDate = false,
+                    SOM = false,
+                    DAR = false,
+                    GOP = false,
+                    FileSize = false,
+                    Resolution = false,
+                    VideoFormat = false,
+                    BitRate = false,
+                    Handle = false,
+                    Link = false,
+                    MachineName = false,
+                    UserName = false,
+                    AudioBits = false,
+                    AudioChannels = false,
+                },
+            };
+        }
+    }
+
+    /// <summary>
     /// Gets the name of the MetadataSelectionQueryUnit object.
     /// </summary>
     /// <value>User-defined name of a unit.</value>

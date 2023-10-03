@@ -7,6 +7,7 @@
 namespace TestQueriesGenerator.Library.Services;
 
 using System.Diagnostics;
+using System.Linq;
 using System.Xml.Serialization;
 using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Entities;
@@ -29,7 +30,6 @@ public static class CompilerService
     private static readonly string OutputDirectoryPath;
     private static readonly string ResultOutputFilePath;
 
-    private static bool isReadyToCompilation;
     private static string datetimeCompilationStart;
     private static string datetimeCompilationFinish;
     private static uint compiledRequestsCount;
@@ -43,33 +43,9 @@ public static class CompilerService
 
         ConfigDirectoryPath = CreateTargetDirectory(currentDirectory, ConfigFolderName);
 
-        string scaleRequestConfigPath = Path.Combine(ConfigDirectoryPath, ScaleRequestCfgFileName);
-        string requestGetTypeConfigPath = Path.Combine(ConfigDirectoryPath, RequestGetTypeCfgFileName);
-        string requestSetTypeConfigPath = Path.Combine(ConfigDirectoryPath, RequestSetTypeCfgFileName);
-
-        bool isScaleCfgReady = false;
-        bool isRequestGetCfgReady = false;
-        bool isRequestSetCfgReady = false;
-
-        if (HasScaleRequestConfig(scaleRequestConfigPath))
-        {
-            ScaleRequestConfigPath = scaleRequestConfigPath;
-            isScaleCfgReady = true;
-        }
-
-        if (HasScaleRequestConfig(requestGetTypeConfigPath))
-        {
-            RequestGetTypeConfigPath = requestGetTypeConfigPath;
-            isRequestGetCfgReady = true;
-        }
-
-        if (HasScaleRequestConfig(requestSetTypeConfigPath))
-        {
-            RequestSetTypeConfigPath = requestSetTypeConfigPath;
-            isRequestSetCfgReady = true;
-        }
-
-        isReadyToCompilation = isScaleCfgReady && isRequestGetCfgReady && isRequestSetCfgReady;
+        ScaleRequestConfigPath = CreateConfigurationFile(ConfigDirectoryPath, ScaleRequestCfgFileName, typeof(ScalableEntity));
+        RequestGetTypeConfigPath = CreateConfigurationFile(ConfigDirectoryPath, RequestGetTypeCfgFileName, typeof(MetadataSelectionQueryUnit));
+        RequestSetTypeConfigPath = CreateConfigurationFile(ConfigDirectoryPath, RequestSetTypeCfgFileName, typeof(MetadataCreationQueryUnit));
 
         OutputDirectoryPath = CreateTargetDirectory(currentDirectory, OutputFolderName);
         ResultOutputFilePath = Path.Combine(OutputDirectoryPath, ResultOutputFileName);
@@ -100,28 +76,19 @@ public static class CompilerService
     /// </summary>
     public static void Run()
     {
+        Stopwatch compilationStopwatch = new ();
         OutBeforeCompilation();
 
-        if (isReadyToCompilation)
-        {
-            var compilationStopwatch = new Stopwatch();
+        ProcessCompilationStart(ref compilationStopwatch);
 
-            ProcessCompilationStart(ref compilationStopwatch);
+        List<ScalableEntity> scales = RetrieveScalableEntities();
+        string compiledScaleGetRequest = CompileScaleGetRequest(scales, true);
+        string compiledScaleSetRequest = CompileScaleSetRequest(scales, true);
 
-            List<ScalableEntity> scales = RetrieveScalableEntities();
+        string[] compiledRequests = { compiledScaleGetRequest, compiledScaleSetRequest };
+        WriteCompiledRequestsToTargetFile(compiledRequests, ResultOutputFilePath);
 
-            string compiledScaleGetRequest = CompileScaleGetRequest(scales, true);
-            string compiledScaleSetRequest = CompileScaleSetRequest(scales, true);
-
-            string[] compiledRequests = { compiledScaleGetRequest, compiledScaleSetRequest };
-            WriteCompiledRequestsToTargetFile(compiledRequests, ResultOutputFilePath);
-
-            ProcessCompilationFinish(ref compilationStopwatch);
-        }
-        else
-        {
-            OutCompilationIsImpossible();
-        }
+        ProcessCompilationFinish(ref compilationStopwatch);
     }
 
     /// <summary>
@@ -374,6 +341,74 @@ public static class CompilerService
         return targetDirectory;
     }
 
+    private static string CreateConfigurationFile(string configDirectory, string configFileName, Type configObjectType)
+    {
+        string configurationFilePath = Path.Combine(configDirectory, configFileName);
+
+        if (File.Exists(configurationFilePath))
+        {
+            OutConfigStatusIsSuccess(configurationFilePath);
+        }
+        else
+        {
+            OutConfigStatusCreation(configurationFilePath);
+            try
+            {
+                using FileStream stream = new (configurationFilePath, FileMode.CreateNew);
+
+                if (configObjectType == typeof(ScalableEntity))
+                {
+                    SerializeConfigurationByDefault(stream, ScalableEntity.ConfigStateByDefault);
+                }
+
+                if (configObjectType == typeof(MetadataSelectionQueryUnit))
+                {
+                    SerializeConfigurationByDefault(stream, MetadataSelectionQueryUnit.ConfigStateByDefault);
+                }
+
+                if (configObjectType == typeof(MetadataCreationQueryUnit))
+                {
+                    SerializeConfigurationByDefault(stream, MetadataCreationQueryUnit.ConfigStateByDefault);
+                }
+            }
+            catch
+            {
+                OutCompilationIsImpossible();
+                throw;
+            }
+        }
+
+        return configurationFilePath;
+    }
+
+    private static void SerializeConfigurationByDefault(FileStream stream, List<ScalableEntity> scalableEntities)
+    {
+        XmlSerializer serializer = new (typeof(List<ScalableEntity>));
+        serializer.Serialize(stream, scalableEntities);
+    }
+
+    private static void SerializeConfigurationByDefault(FileStream stream, List<MetadataSelectionQueryUnit> metadataSelectionQueryUnits)
+    {
+        XmlSerializer serializer = new (typeof(List<MetadataSelectionQueryUnit>));
+        serializer.Serialize(stream, metadataSelectionQueryUnits);
+    }
+
+    private static void SerializeConfigurationByDefault(FileStream stream, List<MetadataCreationQueryUnit> metadataCreationQueryUnits)
+    {
+        XmlSerializer serializer = new (typeof(List<MetadataCreationQueryUnit>));
+        serializer.Serialize(stream, metadataCreationQueryUnits);
+    }
+
+    private static void OutConfigStatusIsSuccess(string configPath)
+    {
+        WriteLine(" [SUCCESS]: \'{0}\' config file was successfully found.", configPath);
+    }
+
+    private static void OutConfigStatusCreation(string configPath)
+    {
+        WriteLine(" [CREATE]: Creating the \'{0}\' config file...", configPath);
+    }
+
     private static void AddAllMetadataFieldsToGetUnit(MetadataSelectionQueryUnit getUnit, ref List<IdGetFieldRequest> getRequests)
     {
         if (getUnit.Agency)
@@ -611,30 +646,6 @@ public static class CompilerService
         return zeroString;
     }
 
-    private static bool HasScaleRequestConfig(string requestConfigPath)
-    {
-        if (File.Exists(requestConfigPath))
-        {
-            OutConfigStatusIsSuccess(requestConfigPath);
-            return true;
-        }
-        else
-        {
-            OutConfigStatusIsFailed(requestConfigPath);
-            return false;
-        }
-    }
-
-    private static void OutConfigStatusIsSuccess(string configPath)
-    {
-        WriteLine(" [SUCCESS]: \'{0}\' config file was successfully found.", configPath);
-    }
-
-    private static void OutConfigStatusIsFailed(string configPath)
-    {
-        WriteLine(" [FAILED]: \'{0}\' config file was not detected.", configPath);
-    }
-
     private static List<ScalableEntity> RetrieveScalableEntities()
     {
         var scaleEntities = new List<ScalableEntity>();
@@ -642,9 +653,14 @@ public static class CompilerService
         var xsScales = new XmlSerializer(typeof(List<ScalableEntity>));
         string path = ScaleRequestConfigPath;
 
-        using (FileStream xmlLoad = File.Open(path, FileMode.Open))
+        try
         {
+            using FileStream xmlLoad = File.Open(path, FileMode.Open);
             scaleEntities = (List<ScalableEntity>)xsScales.Deserialize(xmlLoad);
+        }
+        catch
+        {
+            OutCompilationIsImpossible();
         }
 
         return scaleEntities;
@@ -667,9 +683,14 @@ public static class CompilerService
         string getPath = RequestGetTypeConfigPath;
         var xsGetUnits = new XmlSerializer(typeof(List<MetadataSelectionQueryUnit>));
 
-        using (FileStream xmlLoad = File.Open(getPath, FileMode.Open))
+        try
         {
+            using FileStream xmlLoad = File.Open(getPath, FileMode.Open);
             queryUnits = (List<MetadataSelectionQueryUnit>)xsGetUnits.Deserialize(xmlLoad);
+        }
+        catch
+        {
+            OutCompilationIsImpossible();
         }
 
         return queryUnits;
@@ -692,9 +713,14 @@ public static class CompilerService
         string setPath = RequestSetTypeConfigPath;
         var xsSetUnits = new XmlSerializer(typeof(List<MetadataCreationQueryUnit>));
 
-        using (FileStream xmlLoad = File.Open(setPath, FileMode.Open))
+        try
         {
+            using FileStream xmlLoad = File.Open(setPath, FileMode.Open);
             queryUnits = (List<MetadataCreationQueryUnit>)xsSetUnits.Deserialize(xmlLoad);
+        }
+        catch
+        {
+            OutCompilationIsImpossible();
         }
 
         return queryUnits;

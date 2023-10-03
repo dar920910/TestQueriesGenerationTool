@@ -36,6 +36,34 @@ public record ScalableEntity
     }
 
     /// <summary>
+    /// Gets entity's config state by default.
+    /// </summary>
+    /// <returns>The list of entities which support config state by default.</returns>
+    public static List<ScalableEntity> ConfigStateByDefault
+    {
+        get
+        {
+            return new List<ScalableEntity>()
+            {
+                new ()
+                {
+                    RuntimeID = "testGet",
+                    IdNamePrefix = "DemoGet",
+                    FirstScalePostfixNumber = 0,
+                    LastScalePostfixNumber = 9,
+                },
+                new ()
+                {
+                    RuntimeID = "testSet",
+                    IdNamePrefix = "DemoSet",
+                    FirstScalePostfixNumber = 0,
+                    LastScalePostfixNumber = 9,
+                },
+            };
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the unique identifier for the entity.
     /// </summary>
     [XmlAttribute("RuntimeID")]
