@@ -477,6 +477,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-TestQueriesGenerator.App.CLI/~cfg/request.xml
-TestQueriesGenerator.App.CLI/~cfg/units-get.xml
-TestQueriesGenerator.App.CLI/~cfg/units-set.xml
