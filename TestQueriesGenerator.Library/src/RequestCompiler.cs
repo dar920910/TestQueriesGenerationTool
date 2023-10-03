@@ -1,13 +1,12 @@
 //-----------------------------------------------------------------------
-// <copyright file="CompilerService.cs" company="Demo Projects Workshop">
+// <copyright file="RequestCompiler.cs" company="Demo Projects Workshop">
 //     Copyright (c) Demo Projects Workshop. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TestQueriesGenerator.Library.Services;
+namespace TestQueriesGenerator.Library;
 
 using System.Diagnostics;
-using System.Linq;
 using System.Xml.Serialization;
 using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Entities;
@@ -17,7 +16,7 @@ using static System.Console;
 /// <summary>
 /// Represents static methods to provide features of queries compilation.
 /// </summary>
-public static class CompilerService
+public static class RequestCompiler
 {
     private const string ConfigFolderName = "~cfg";
     private const string OutputFolderName = "~out";
@@ -35,9 +34,9 @@ public static class CompilerService
     private static uint compiledRequestsCount;
 
     /// <summary>
-    /// Initializes static members of the <see cref="CompilerService"/> class.
+    /// Initializes static members of the <see cref="RequestCompiler"/> class.
     /// </summary>
-    static CompilerService()
+    static RequestCompiler()
     {
         string currentDirectory = Directory.GetCurrentDirectory();
 

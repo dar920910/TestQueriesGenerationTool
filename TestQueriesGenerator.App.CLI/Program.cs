@@ -4,4 +4,4 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-TestQueriesGenerator.Library.Services.CompilerService.Run();
+TestQueriesGenerator.Library.RequestCompiler.Run();

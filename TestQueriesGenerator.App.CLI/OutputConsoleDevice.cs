@@ -4,9 +4,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using TestQueriesGenerator.Library;
 using TestQueriesGenerator.Library.Domains;
 using TestQueriesGenerator.Library.Entities;
-using TestQueriesGenerator.Library.Services;
 using static System.Console;
 
 /// <summary>
@@ -124,9 +124,9 @@ internal static class OutputConsoleDevice
     /// </summary>
     internal static void OutConfigurationLocation()
     {
-        WriteLine("{0}: {1}", nameof(CompilerService.ScaleRequestConfigPath), CompilerService.ScaleRequestConfigPath);
-        WriteLine("{0}: {1}", nameof(CompilerService.RequestGetTypeConfigPath), CompilerService.RequestGetTypeConfigPath);
-        WriteLine("{0}: {1}", nameof(CompilerService.RequestSetTypeConfigPath), CompilerService.RequestSetTypeConfigPath);
+        WriteLine("{0}: {1}", nameof(RequestCompiler.ScaleRequestConfigPath), RequestCompiler.ScaleRequestConfigPath);
+        WriteLine("{0}: {1}", nameof(RequestCompiler.RequestGetTypeConfigPath), RequestCompiler.RequestGetTypeConfigPath);
+        WriteLine("{0}: {1}", nameof(RequestCompiler.RequestSetTypeConfigPath), RequestCompiler.RequestSetTypeConfigPath);
     }
 
     /// <summary>
@@ -135,11 +135,11 @@ internal static class OutputConsoleDevice
     /// <param name="scalableEntity">A scalable entity object.</param>
     internal static void OutScalableRequests(ScalableEntity scalableEntity)
     {
-        List<MetadataSelectionQueryUnit> metadataGetUnits = CompilerService.CreateGetUnitsList(scalableEntity);
-        List<MetadataCreationQueryUnit> metadataSetUnits = CompilerService.CreateSetUnitsList(scalableEntity);
+        List<MetadataSelectionQueryUnit> metadataGetUnits = RequestCompiler.CreateGetUnitsList(scalableEntity);
+        List<MetadataCreationQueryUnit> metadataSetUnits = RequestCompiler.CreateSetUnitsList(scalableEntity);
 
-        ScaleGetMetaRequest scaleGetRequest = CompilerService.CreateScaleGetRequest(metadataGetUnits);
-        ScaleSetMetaRequest scaleSetRequest = CompilerService.CreateScaleSetRequest(metadataSetUnits);
+        ScaleGetMetaRequest scaleGetRequest = RequestCompiler.CreateScaleGetRequest(metadataGetUnits);
+        ScaleSetMetaRequest scaleSetRequest = RequestCompiler.CreateScaleSetRequest(metadataSetUnits);
 
         string scaleGetRequestString = scaleGetRequest.Compile(true);
         string scaleSetRequestString = scaleSetRequest.Compile(true);
@@ -147,7 +147,7 @@ internal static class OutputConsoleDevice
         OutCompiledRequest(scaleGetRequestString);
         OutCompiledRequest(scaleSetRequestString);
 
-        CompilerService.WriteSingleCompiledRequestToTargetFile(scaleGetRequestString, "resultsGet.txt");
-        CompilerService.WriteSingleCompiledRequestToTargetFile(scaleSetRequestString, "resultsSet.txt");
+        RequestCompiler.WriteSingleCompiledRequestToTargetFile(scaleGetRequestString, "resultsGet.txt");
+        RequestCompiler.WriteSingleCompiledRequestToTargetFile(scaleSetRequestString, "resultsSet.txt");
     }
 }

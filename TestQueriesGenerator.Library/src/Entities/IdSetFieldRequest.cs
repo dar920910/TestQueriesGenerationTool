@@ -7,7 +7,7 @@
 namespace TestQueriesGenerator.Library.Entities;
 
 using TestQueriesGenerator.Library.Domains;
-using TestQueriesGenerator.Library.Services;
+using TestQueriesGenerator.Library;
 
 /// <summary>
 /// Represents a request to set a metadata field value.
@@ -39,7 +39,7 @@ public class IdSetFieldRequest : AbstractMetadataFieldRequest, ICompilableReques
     {
         string compiledRequest = this.command + " " + this.metadataFieldName + " " + this.value + " " + this.targetID;
 
-        CompilerService.Register(compiledRequest);
+        RequestCompiler.Register(compiledRequest);
 
         if (isDebugMode)
         {
