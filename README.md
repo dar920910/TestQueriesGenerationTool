@@ -81,7 +81,7 @@ Metadata fields are set via values of XML elements:
 
 ### :grey_question: Existing Limitations
 
-The current implement of this project supports only metadata fields for the specified domain area.
+The current implementation of this project supports only metadata fields for the specified domain area.
 This is **media server environment** because the project was appeared as a specialized automation tool.
 So, you **cannot define** your own metadata fields in the current program version.
 
